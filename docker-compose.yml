@@ -1,0 +1,90 @@
+---
+services:
+  academicid:
+    image: acadmicid/sapien:0.01
+    ports:
+      - 3000:3000
+      - 3030:3030
+    environment:
+      # #################
+      # OPENAI ENVIRONMENT VARIABLES
+      # #################
+      # OPENAI_KEY:
+      # OPEN_AI_TEXT_GEN_MODEL:
+      # #################
+      # AZURE OPENAI SERVICE ENVIRONMENT VARIABLES
+      # #################
+      # AZURE_OPENAI_API_V:
+      # #################
+      # AZURE OPENAI TEXT GENERATION & EMBEDDINGS
+      # #################
+      # AZURE_OPENAI_KEY:
+      # AZURE_OPENAI_RESOURCE:
+      # AZURE_OPENAI_EMBED_DEPLOYMENT:
+      # AZURE_OPENAI_TXT_DEPLOYMENT:
+      # #################
+      # AZURE OPENAI VISION DEPLOYMENT
+      # #################
+      # AZURE_OPENAI_VISION_RESOURCE:
+      # AZURE_OPENAI_VISION_DEPLOYMENT:
+      # AZURE_OPENAI_VISION_KEY:
+      # #################
+      # AZURE OPENAI IMAGE GENERATION DEPLOYMET
+      # #################
+      # AZURE_OPENAI_IMG_RESOURCE:
+      # AZURE_OPENAI_IMG_KEY:
+      # AZURE_OPENAI_IMG_DEPLOYMENT:
+      # #################
+      # SEMATNIC SCHOLAR
+      # #################
+      # SEMANTIC_SCHOLAR_API_KEY:
+      # #################
+      # GEMINI ENVIRONMENT VARIABLES
+      # #################
+      # GEMINI_MODEL:
+      # GEMINI_API_KEY:
+      # #################
+      # CLAUDE ENVIRONMENT VARIABLES
+      # #################
+      # CLAUDE_MODEL:
+      # CLAUDE_API_KEY:
+    volumes:
+      - ./monitoring/logs:/app/logs
+    restart: unless-stopped
+  weaviate:
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --scheme
+      - http
+    image: semitechnologies/weaviate:1.24.0
+    ports:
+      - 8080:8080
+      - 50051:50051
+      - 2112:2112
+    volumes:
+      - ./weaviate/weaviate_data:/var/lib/weaviate
+    restart: unless-stopped
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      QUERY_MAXIMUM_RESULTS: 500001
+      AUTHENTICATION_APIKEY_ENABLED: 'true'
+      # It is recommended to leave this key as is, it is the default key for connecting the academicid service to weaviate. If you update this key, you will need to update the `WEAVIATE_API_KEY` environment variable for the academicid service as well.
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: '@5D%t$3b49NWx'
+      AUTHENTICATION_APIKEY_USERS: 'academicid'
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'none'
+      CLUSTER_HOSTNAME: 'node1'
+  redis:
+    image: redis
+    container_name: redis
+    # Similar to weaviate, it is recommended to leave this password as is. If you update this password, you will need to update the `REDIS_PW` environment variable for the academicid service.
+    command: redis-server --appendonly yes --requirepass 596Lf6
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/redis_data:/data
+    restart: unless-stopped
