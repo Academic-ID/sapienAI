@@ -72,7 +72,7 @@ service will work across all devices. We encourage you to raise issues with us
 if you come across any to help us speed up our work towards releasing a stable
 version.
 
-One current known issue is that with some Windows machines that prevents user's
+One current known issue impacts some Windows machines and prevents users from
 logging in. We are working on a fix for the issue. This does not seem to be an
 issue on Apple silicon Mac devices.
 
