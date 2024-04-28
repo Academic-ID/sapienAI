@@ -48,6 +48,9 @@ services:
       # #################
       # CLAUDE_MODEL:
       # CLAUDE_API_KEY:
+    depends_on:
+      - weaviate
+      - redis
     volumes:
       - ./monitoring/logs:/app/logs
     restart: unless-stopped
@@ -59,7 +62,7 @@ services:
       - '8080'
       - --scheme
       - http
-    image: semitechnologies/weaviate:1.24.0
+    image: semitechnologies/weaviate:1.24.10
     ports:
       - 8080:8080
       - 50051:50051
