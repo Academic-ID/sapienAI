@@ -29,7 +29,7 @@ services:
       # AZURE_OPENAI_VISION_DEPLOYMENT:
       # AZURE_OPENAI_VISION_KEY:
       # #################
-      # AZURE OPENAI IMAGE GENERATION DEPLOYMET
+      # AZURE OPENAI IMAGE GENERATION DEPLOYMENT
       # #################
       # AZURE_OPENAI_IMG_RESOURCE:
       # AZURE_OPENAI_IMG_KEY:
@@ -77,14 +77,14 @@ services:
       # It is recommended to leave this key as is, it is the default key for connecting the academicid service to weaviate. If you update this key, you will need to update the `WEAVIATE_API_KEY` environment variable for the academicid service as well.
       AUTHENTICATION_APIKEY_ALLOWED_KEYS: '@5D%t$3b49NWx'
       AUTHENTICATION_APIKEY_USERS: 'academicid'
-      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
       DEFAULT_VECTORIZER_MODULE: 'none'
       CLUSTER_HOSTNAME: 'node1'
   redis:
     image: redis
     container_name: redis
-    # Similar to weaviate, it is recommended to leave this password as is. If you update this password, you will need to update the `REDIS_PW` environment variable for the academicid service.
+    # Similar to weaviate, it is recommended that this password be left as is. If you update this password, you will need to update the `REDIS_PW` environment variable for the academicid service.
     command: redis-server --appendonly yes --requirepass 596Lf6
     ports:
       - 6379:6379
