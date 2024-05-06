@@ -7,8 +7,8 @@ models, including GPT4, Claude Opus and Gemini Pro
 
 Yes, and no.
 
-Sapien currently provides two main functions that make it the best AI assistant
-for academics, researchers and students.
+Sapien currently provides two main functions that make it (in our opinion) the
+superior AI assistant for academics, researchers and students.
 
 ### 1. Sapien Chat
 
@@ -242,6 +242,36 @@ A full list of other customisable components can be found below under heading
 
 **Once you have set these environment variables, make sure you save the
 `docker-compose.yml` file.**
+
+#### Backups
+
+With version 0.02, you can now set up Weaviate with
+[backup modules](https://weaviate.io/developers/weaviate/configuration/backups)
+and the app will trigger the database to backup every 24 hours.
+
+Follow the instructions above to set up Weaviate with backups.
+
+Each backup will have a unique ID in the form of `date-sapien-backup`. You can
+find these IDs in the logs, or they should be the name of the backup items in
+the location you have set the backups to.
+
+To restore a backup, simply stop the service and set the environment variable:
+`WEAVIATE_BACKUP_RESTORE_ID` with the backup ID. For example:
+
+```yaml
+WEAVIATE_BACKUP_RESTORE_ID: '2024-05-05t23_12_44-sapien-backup'
+```
+
+To prevent accidentally restoring if the system restarts and this env var is
+still set, this will only restore the backup if the database is empty. This
+means you may have to delete (or move elsewhere) the `weaviate_data` folder in
+the `weaviate` directory before restoring the backup.
+
+```
+sapienAI/
+└── weaviate/
+    └── weaviate_data/
+```
 
 ### Starting the service
 

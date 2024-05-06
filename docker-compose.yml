@@ -1,7 +1,7 @@
 ---
 services:
   academicid:
-    image: acadmicid/sapien:0.01
+    image: acadmicid/sapien:0.02
     ports:
       - 3000:3000
       - 3030:3030
