@@ -144,6 +144,8 @@ If you want to set the specific model version, you can set the
 `gpt-4-turbo`. If set, this must be a recent model that handles vision and tool
 calling.
 
+---
+
 #### Azure OpenAI Service
 
 To instead use an `Azure OpenAI Service deployment`, you can set the following
@@ -194,11 +196,15 @@ Once this is available, how these env are defined will be revisited._
 | AZURE_OPENAI_IMG_KEY           | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue    |
 | AZURE_OPENAI_IMG_DEPLOYMENT    | This is the name of the Dalle3 model deployment                                                                                                      | dalle3             |
 
+---
+
 #### Other common Env variables
 
 Providing the below details will open up additional functionality. For example,
 providing the Google Gemini and/or Claude model config will allow you to choose
 different models to power conversations.
+
+---
 
 ##### Google Gemini
 
@@ -209,6 +215,8 @@ you can provide the following:
 | -------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------- |
 | GEMINI_MODEL   | The Gemini model you want to use. This must support at least 128k tokens. Vision will only work with Gemini-1.5-pro models. | gemini-1.5-pro-latest |
 | GEMINI_API_KEY | This is your API key from [Google AI Studio](https://aistudio.google.com/).                                                 | someStringValue       |
+
+---
 
 ##### Anthropic Claude
 
@@ -226,7 +234,9 @@ rectified as soon as Anthropic provide this functionality.
 The ability to use Claude models hosted in VertexAI or Amazon Bedrock is on the
 roadmap.
 
-##### Semantic Scholar
+---
+
+##### Semantic Scholar Key
 
 Sapien uses Semantic Scholar to fetch academic papers to inform feedback or chat
 messages. You can provide a
@@ -236,6 +246,22 @@ remove the rate limit restrictions enforced on the public API.
 | Env Var                  | Description                                  | Example         |
 | ------------------------ | -------------------------------------------- | --------------- |
 | SEMANTIC_SCHOLAR_API_KEY | API Key provided to you by Semantic Scholar. | someStringValue |
+
+---
+
+##### Paperbuzz
+
+We augement papers returned from Semantic Scholar with data from other public
+API endpoints. One of these is [Paperbuzz](https://paperbuzz.org/).
+
+To have this additional data from the
+[Paperbuzz API](https://paperbuzz.org/api), an email is required.
+
+| Env Var         | Description                                             | Example                |
+| --------------- | ------------------------------------------------------- | ---------------------- |
+| PAPERBUZZ_EMAIL | An email that is provided alongside calls to Paperbuzz. | bill@emailprovider.com |
+
+---
 
 A full list of other customisable components can be found below under heading
 `Further customisation`.

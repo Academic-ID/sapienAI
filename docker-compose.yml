@@ -1,7 +1,7 @@
 ---
 services:
   academicid:
-    image: acadmicid/sapien:0.02
+    image: acadmicid/sapien:0.03
     ports:
       - 3000:3000
       - 3030:3030
@@ -35,10 +35,6 @@ services:
       # AZURE_OPENAI_IMG_KEY:
       # AZURE_OPENAI_IMG_DEPLOYMENT:
       # #################
-      # SEMATNIC SCHOLAR
-      # #################
-      # SEMANTIC_SCHOLAR_API_KEY:
-      # #################
       # GEMINI ENVIRONMENT VARIABLES
       # #################
       # GEMINI_MODEL:
@@ -48,6 +44,14 @@ services:
       # #################
       # CLAUDE_MODEL:
       # CLAUDE_API_KEY:
+      # #################
+      # SEMATNIC SCHOLAR
+      # #################
+      # SEMANTIC_SCHOLAR_API_KEY:
+      # #################
+      # PAPERBUZZ
+      # #################
+      # PAPERBUZZ_EMAIL:
     depends_on:
       - weaviate
       - redis
