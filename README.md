@@ -72,10 +72,6 @@ service will work across all devices. We encourage you to raise issues with us
 if you come across any to help us speed up our work towards releasing a stable
 version.
 
-One current known issue impacts some Windows machines and prevents users from
-logging in. We are working on a fix for the issue. This does not seem to be an
-issue on Apple silicon Mac devices.
-
 ## Getting started
 
 For those familiar with running Docker images with Docker Compose, this should
@@ -176,18 +172,17 @@ this is the way .
 
 As the Azure vision models do not presently support tool calling, a chat
 containing a user-sent image will continue using the Vision model, meaning the
-assistant cannot call functions such as image generation.
-
-_Azure will likely release a stable version of GPT-4-turbo soon. This will
-likely include vision capabilities similar to OpenAI's recent model upgrade.
-Once this is available, how these env are defined will be revisited._
+assistant cannot call functions such as image generation. This is only a
+restriction if you are not using a GPT-4**o** model. GPT-4**o** can handle
+vision and function calling. As such, it is suggested to use a GPT-4**o**
+deployment where you can.
 
 | Env Var                        | Description                                                                                                                                          | Example            |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | AZURE_OPENAI_API_V             | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview |
 | AZURE_OPENAI_KEY               | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue    |
 | AZURE_OPENAI_RESOURCE          | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen     |
-| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4-turbo         |
+| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o              |
 | AZURE_OPENAI_EMBED_DEPLOYMENT  | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings         |
 | AZURE_OPENAI_VISION_RESOURCE   | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision      |
 | AZURE_OPENAI_VISION_DEPLOYMENT | This is the name of the vision model deployment.                                                                                                     | vision             |
@@ -220,11 +215,7 @@ you can provide the following:
 
 ##### Anthropic Claude
 
-To add Anthropic's `Claude` models, you can provide the following variables. At
-present, Claude cannot call functions while streaming chat completions. This
-means when Claude is set to power a conversation, you will be unable to generate
-images or call other functions. Hopefully, this is only temporary and can be
-rectified as soon as Anthropic provide this functionality.
+To add Anthropic's `Claude` models, you can provide the following variables.
 
 | Env Var        | Description                                                                                                     | Example                |
 | -------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------- |
@@ -368,10 +359,8 @@ work on specific research projects, tying together AI research capabilities,
 AI-assisted writing and advanced AI document processing.
 
 While this major feature is under construction, bug fixes and small improvements
-will be undertaken. On the immediate radar are expanded cloud support, better
-Azure OpenAI Service configuration (e.g. as GPT4 is upgraded to align with
-OpenAI's recent GPTVision with tool calling), and function calling for Claude
-models.
+will be undertaken. On the immediate radar are expanded cloud support and more
+streamlined Azure OpenAI Service configuration.
 
 If you have feature requests, please detail these here:
 https://github.com/Academic-ID/sapienAI/discussions
