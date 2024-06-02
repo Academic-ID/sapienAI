@@ -175,21 +175,24 @@ containing a user-sent image will continue using the Vision model, meaning the
 assistant cannot call functions such as image generation. This is only a
 restriction if you are not using a GPT-4**o** model. GPT-4**o** can handle
 vision and function calling. As such, it is suggested to use a GPT-4**o**
-deployment where you can.
+deployment where you can. You need to set the `USING_GPT4O` env variable to
+'true' if using a GPT-4**o** deployment. This ensures the system knows when it
+can handle function calling and vision requests.
 
-| Env Var                        | Description                                                                                                                                          | Example            |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| AZURE_OPENAI_API_V             | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview |
-| AZURE_OPENAI_KEY               | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue    |
-| AZURE_OPENAI_RESOURCE          | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen     |
-| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o              |
-| AZURE_OPENAI_EMBED_DEPLOYMENT  | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings         |
-| AZURE_OPENAI_VISION_RESOURCE   | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision      |
-| AZURE_OPENAI_VISION_DEPLOYMENT | This is the name of the vision model deployment.                                                                                                     | vision             |
-| AZURE_OPENAI_VISION_KEY        | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                               | someStringValue    |
-| AZURE_OPENAI_IMG_RESOURCE      | This is the name of the resource containing the Dalle3 deployment.                                                                                   | sapien-img-gen     |
-| AZURE_OPENAI_IMG_KEY           | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue    |
-| AZURE_OPENAI_IMG_DEPLOYMENT    | This is the name of the Dalle3 model deployment                                                                                                      | dalle3             |
+| Env Var                        | Description                                                                                                                                            | Example            |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| AZURE_OPENAI_API_V             | This is the API version that will be used across all different deployments set below.                                                                  | 2024-02-15-preview |
+| AZURE_OPENAI_KEY               | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable)   | someStringValue    |
+| AZURE_OPENAI_RESOURCE          | This is the name of the resource containing the text generation and embed deployments.                                                                 | sapien-txt-gen     |
+| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                            | gpt4o              |
+| AZURE_OPENAI_EMBED_DEPLOYMENT  | This is the name of the deployment for a `text-embedding-3-small` model.                                                                               | embeddings         |
+| AZURE_OPENAI_VISION_RESOURCE   | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                        | sapien-vision      |
+| AZURE_OPENAI_VISION_DEPLOYMENT | This is the name of the vision model deployment.                                                                                                       | vision             |
+| AZURE_OPENAI_VISION_KEY        | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                                 | someStringValue    |
+| AZURE_OPENAI_IMG_RESOURCE      | This is the name of the resource containing the Dalle3 deployment.                                                                                     | sapien-img-gen     |
+| AZURE_OPENAI_IMG_KEY           | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                    | someStringValue    |
+| AZURE_OPENAI_IMG_DEPLOYMENT    | This is the name of the Dalle3 model deployment                                                                                                        | dalle3             |
+| USING_GPT4O                    | Whether your deployment is a GPT-4o model. This removes restrictions on function calling while vision requests are present in a chat. Default is false | true               |
 
 ---
 
@@ -377,7 +380,45 @@ is replaced.
 
 ## Further customisation
 
-Stay tuned. We will be adding these details here soon.
+Below is a list of all environmental variables that can be set.
+
+| Environment Variable               | Description                                                                                                                               |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `BACKEND_PORT`                     | Port number for the backend server. Defaults to 3030 if not specified.                                                                    |
+| `FRONTEND_URL`                     | URL for the frontend application. Defaults to `http://localhost:3000`.                                                                    |
+| `BACKEND_URL`                      | URL for the backend application. Defaults to `http://localhost`.                                                                          |
+| `TIMEZONE`                         | Timezone used for logging time stamps. E.g. `Australia/Sydney`. Defaults to `UTC`                                                         |
+| `CUSTOM_PROMPT`                    | You can provide a custom prompt text to better tailor Sapien's behaviour to your desired usecase. See release note 0.05 for more details. |
+| `PAPERBUZZ_EMAIL`                  | Email address for Paperbuzz service notifications.                                                                                        |
+| `WEAVIATE_HOST`                    | Host address for the Weaviate service. Defaults to `weaviate:8080`.                                                                       |
+| `WEAVIATE_PORT`                    | Port for Weaviate HTTP requests. Defaults to `8080`.                                                                                      |
+| `WEAVIATE_GRPC_HOST`               | Host address for Weaviate GRPC requests. Defaults to `weaviate`.                                                                          |
+| `WEAVIATE_GRPC_PORT`               | Port for Weaviate GRPC requests. Defaults to `50051`.                                                                                     |
+| `WEAVIATE_SCHEME`                  | Scheme for the Weaviate service (e.g., `http`, `https`). Defaults to `http`.                                                              |
+| `WEAVIATE_API_KEY`                 | API key for the Weaviate service.                                                                                                         |
+| `WEAVIATE_BACKUP_RESTORE_ID`       | ID for Weaviate backup and restore operations.                                                                                            |
+| `WEAVIATE_BACKUP_HOURLY_FREQUENCY` | How frequent, in hours, Weaviate DB backups should run; default is 24 hours.                                                              |
+| `REDIS_URL`                        | URL for the Redis server. Defaults to `redis://redis:6379`.                                                                               |
+| `REDIS_PW`                         | Password for the Redis server.                                                                                                            |
+| `OPENAI_KEY`                       | API key for OpenAI services.                                                                                                              |
+| `OPEN_AI_TEXT_GEN_MODEL`           | Model name for OpenAI text generation.                                                                                                    |
+| `AZURE_OPENAI_KEY`                 | API key for Azure OpenAI services.                                                                                                        |
+| `AZURE_OPENAI_API_VERSION`         | API version for Azure OpenAI services. Defaults to `2024-02-15-preview`.                                                                  |
+| `USING_GPT4O`                      | Flag indicating whether GPT-4o is being used. Defaults to `false`. This only needs to be set if using Azure.                              |
+| `AZURE_OPENAI_RESOURCE`            | Resource name for Azure OpenAI services.                                                                                                  |
+| `AZURE_OPENAI_TXT_DEPLOYMENT`      | Deployment name for Azure OpenAI text services.                                                                                           |
+| `AZURE_OPENAI_EMBED_DEPLOYMENT`    | Deployment name for Azure OpenAI embedding services.                                                                                      |
+| `AZURE_OPENAI_VISION_RESOURCE`     | Resource name for Azure OpenAI vision services.                                                                                           |
+| `AZURE_OPENAI_VISION_DEPLOYMENT`   | Deployment name for Azure OpenAI vision services.                                                                                         |
+| `AZURE_OPENAI_VISION_KEY`          | API key for Azure OpenAI vision services.                                                                                                 |
+| `AZURE_OPENAI_IMG_RESOURCE`        | Resource name for Azure OpenAI image services.                                                                                            |
+| `AZURE_OPENAI_IMG_DEPLOYMENT`      | Deployment name for Azure OpenAI image services.                                                                                          |
+| `AZURE_OPENAI_IMG_KEY`             | API key for Azure OpenAI image services.                                                                                                  |
+| `CLAUDE_MODEL`                     | Model name for Claude AI services.                                                                                                        |
+| `CLAUDE_API_KEY`                   | API key for Claude AI services.                                                                                                           |
+| `GEMINI_MODEL`                     | Model name for Gemini AI services.                                                                                                        |
+| `GEMINI_API_KEY`                   | API key for Gemini AI services.                                                                                                           |
+| `SEMANTIC_SCHOLAR_API_KEY`         | API key for Semantic Scholar services.                                                                                                    |
 
 ## Using Microsoft Auth within your Tenant
 
