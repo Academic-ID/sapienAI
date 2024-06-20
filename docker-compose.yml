@@ -1,7 +1,7 @@
 ---
 services:
   academicid:
-    image: acadmicid/sapien:0.05
+    image: acadmicid/sapien:0.06
     dns:
       - 1.1.1.1
       - 1.0.0.1
@@ -21,11 +21,13 @@ services:
       # AZURE_OPENAI_API_V:
       # #################
       # AZURE OPENAI TEXT GENERATION & EMBEDDINGS
+      # IF USING A GPT4O MODEL FOR TEXT, PLEASE SET THE `USING_GPT4O` ENVIRONMENT VARIABLE TO true; otherwise delete or leave as is.
       # #################
       # AZURE_OPENAI_KEY:
       # AZURE_OPENAI_RESOURCE:
       # AZURE_OPENAI_EMBED_DEPLOYMENT:
       # AZURE_OPENAI_TXT_DEPLOYMENT:
+      # USING_GPT4O:
       # #################
       # AZURE OPENAI VISION DEPLOYMENT
       # #################

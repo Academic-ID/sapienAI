@@ -66,11 +66,10 @@ integration.
 
 ## Beta notice!
 
-This version of sapienAI is a very early beta. Testing has been limited and only
-on a restricted range of devices. As such, there are no guarantees that the
-service will work across all devices. We encourage you to raise issues with us
-if you come across any to help us speed up our work towards releasing a stable
-version.
+This version of sapienAI is an early beta. Testing has been limited and only on
+a restricted range of devices. As such, there are no guarantees that the service
+will work across all devices. We encourage you to raise issues with us if you
+come across any to help us speed up our work towards releasing a stable version.
 
 ## Getting started
 
