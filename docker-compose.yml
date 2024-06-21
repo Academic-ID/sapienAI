@@ -1,7 +1,7 @@
 ---
 services:
   academicid:
-    image: acadmicid/sapien:0.06
+    image: acadmicid/sapien:0.07
     dns:
       - 1.1.1.1
       - 1.0.0.1
