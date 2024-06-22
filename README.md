@@ -229,6 +229,26 @@ roadmap.
 
 ---
 
+##### AWS Anthropic Claude
+
+You can access Anthropic's `Claude` models through Amazon Bedrock. To do so,
+provide the following environmental variables.
+
+| Env Var               | Description                                                                                        | Example                                 |
+| --------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| CLAUDE_AWS_MODEL      | The Claude model being access through AWS (model naming is different than direct Anthropic access) | anthropic.claude-3-sonnet-20240229-v1:0 |
+| CLAUDE_AWS_REGION     | The AWS region the model is deployed in.                                                           | ap-southeast-2                          |
+| CLAUDE_AWS_ACCESS_KEY | The AWS access key for the account with authorisation to access the model deployment.              | someStringValue                         |
+| CLAUDE_AWS_SECRET_KEY | The AWS secret key associated with the access key account.                                         | someStringValue                         |
+
+The service will default to the direct Anthropic API if provided, so to use AWS
+Claude, make sure you do not set the `CLAUDE_MODEL` and `CLAUDE_API_KEY`
+variables.
+
+The ability to use Claude models hosted in VertexAI is on the roadmap.
+
+---
+
 ##### Semantic Scholar Key
 
 Sapien uses Semantic Scholar to fetch academic papers to inform feedback or chat
@@ -415,6 +435,10 @@ Below is a list of all environmental variables that can be set.
 | `AZURE_OPENAI_IMG_KEY`             | API key for Azure OpenAI image services.                                                                                                  |
 | `CLAUDE_MODEL`                     | Model name for Claude AI services.                                                                                                        |
 | `CLAUDE_API_KEY`                   | API key for Claude AI services.                                                                                                           |
+| `CLAUDE_AWS_MODEL`                 | The Claude model being access through AWS (model naming is different than direct Anthropic access)                                        |
+| `CLAUDE_AWS_REGION`                | The AWS region the model is deployed in.                                                                                                  |
+| `CLAUDE_AWS_ACCESS_KEY`            | The AWS access key for the account with authorisation to access the model deployment.                                                     |
+| `CLAUDE_AWS_SECRET_KEY`            | The AWS secret key associated with the access key account.                                                                                |
 | `GEMINI_MODEL`                     | Model name for Gemini AI services.                                                                                                        |
 | `GEMINI_API_KEY`                   | API key for Gemini AI services.                                                                                                           |
 | `SEMANTIC_SCHOLAR_API_KEY`         | API key for Semantic Scholar services.                                                                                                    |
