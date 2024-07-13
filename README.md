@@ -75,9 +75,7 @@ come across any to help us speed up our work towards releasing a stable version.
 
 For those familiar with running Docker images with Docker Compose, this should
 be a straightforward experience. If you are unfamiliar with running Docker
-images, these instructions are hopefully detailed enough to get you started. If
-not, you can follow along with this video to set up and run sapienAI: [TODO: add
-video link]
+images, these instructions are hopefully detailed enough to get you started.
 
 ### Requirements
 
@@ -152,12 +150,11 @@ There are three distinct Azure Resources that need to be set:
 
 1. The resource for text generation and embeddings. These functionalities need
    to be contained within the same resource. There will need to be a deployment
-   for the `text-embedding-3-small` model, and a deployment for a non-vision
-   GPT-4-turbo model that supports 128k tokens.
+   for the `text-embedding-3-small` model, and a deployment for a GPT4 family
+   model that supports 128k tokens and a deployment for a 3.5 family model.
 2. A resource for a vision deployment endpoint. This must contain a GPT4-vision
    deployment.
-3. A resource for Dall.e 3 deployment. This must have a deployment for the
-   Dall.e 3 vision model.
+3. A resource for a Dall.e 3 deployment. This must have a Dall.e 3 deployment.
 
 These resources can overlap. If you have a resource in a region that has the
 availability for all features, you can set the env var for each feature to the
@@ -167,31 +164,28 @@ If you do not set the Azure vision resource, and no other vision capable models
 are set, you will not be able to use vision capabilities.
 
 This is somewhat unwiedly, but until Azure provides all models in all regions,
-this is the way .
+this is the way.
 
-As the Azure vision models do not presently support tool calling, a chat
-containing a user-sent image will continue using the Vision model, meaning the
-assistant cannot call functions such as image generation. This is only a
-restriction if you are not using a GPT-4**o** model. GPT-4**o** can handle
-vision and function calling. As such, it is suggested to use a GPT-4**o**
-deployment where you can. You need to set the `USING_GPT4O` env variable to
-'true' if using a GPT-4**o** deployment. This ensures the system knows when it
-can handle function calling and vision requests.
+To simplify deployments, we are moving to only support GPT4o models. As we clean
+this up, we will streamline the environmental variables that need to be set,
+however for now, you must set all the variables below, even if the vision and
+txt deployments are the same resources.
 
-| Env Var                        | Description                                                                                                                                            | Example            |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| AZURE_OPENAI_API_V             | This is the API version that will be used across all different deployments set below.                                                                  | 2024-02-15-preview |
-| AZURE_OPENAI_KEY               | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable)   | someStringValue    |
-| AZURE_OPENAI_RESOURCE          | This is the name of the resource containing the text generation and embed deployments.                                                                 | sapien-txt-gen     |
-| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                            | gpt4o              |
-| AZURE_OPENAI_EMBED_DEPLOYMENT  | This is the name of the deployment for a `text-embedding-3-small` model.                                                                               | embeddings         |
-| AZURE_OPENAI_VISION_RESOURCE   | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                        | sapien-vision      |
-| AZURE_OPENAI_VISION_DEPLOYMENT | This is the name of the vision model deployment.                                                                                                       | vision             |
-| AZURE_OPENAI_VISION_KEY        | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                                 | someStringValue    |
-| AZURE_OPENAI_IMG_RESOURCE      | This is the name of the resource containing the Dalle3 deployment.                                                                                     | sapien-img-gen     |
-| AZURE_OPENAI_IMG_KEY           | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                    | someStringValue    |
-| AZURE_OPENAI_IMG_DEPLOYMENT    | This is the name of the Dalle3 model deployment                                                                                                        | dalle3             |
-| USING_GPT4O                    | Whether your deployment is a GPT-4o model. This removes restrictions on function calling while vision requests are present in a chat. Default is false | true               |
+| Env Var                        | Description                                                                                                                                          | Example            |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| AZURE_OPENAI_API_V             | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview |
+| AZURE_OPENAI_KEY               | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue    |
+| AZURE_OPENAI_RESOURCE          | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen     |
+| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o              |
+| AZURE_OPENAI_TXT_DEPLOYMENT_35 | This is the name of the deployment for a 3.5 family model model.                                                                                     | gpt-35             |
+| AZURE_OPENAI_EMBED_DEPLOYMENT  | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings         |
+| AZURE_OPENAI_VISION_RESOURCE   | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision      |
+| AZURE_OPENAI_VISION_DEPLOYMENT | This is the name of the vision model deployment.                                                                                                     | vision             |
+| AZURE_OPENAI_VISION_KEY        | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                               | someStringValue    |
+| AZURE_OPENAI_IMG_RESOURCE      | This is the name of the resource containing the Dalle3 deployment.                                                                                   | sapien-img-gen     |
+| AZURE_OPENAI_IMG_KEY           | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue    |
+| AZURE_OPENAI_IMG_DEPLOYMENT    | This is the name of the Dalle3 model deployment                                                                                                      | dalle3             |
+| USING_GPT4O                    | This needs to be set to 'true' if using an Azure GPT4o model                                                                                         | true               |
 
 ---
 
@@ -199,19 +193,52 @@ can handle function calling and vision requests.
 
 Providing the below details will open up additional functionality. For example,
 providing the Google Gemini and/or Claude model config will allow you to choose
-different models to power conversations.
+these models to power conversations.
 
 ---
 
 ##### Google Gemini
 
-To open the option to use Google's `Gemini` models to power chat conversations,
-you can provide the following:
+To have the option to use Google's `Gemini` models to power chat conversations,
+you can provide access through either Google AI Studio _OR_ Vertex AI.
+
+###### Google AI Studio
 
 | Env Var        | Description                                                                                                                 | Example               |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| GEMINI_MODEL   | The Gemini model you want to use. This must support at least 128k tokens. Vision will only work with Gemini-1.5-pro models. | gemini-1.5-pro-latest |
+| GEMINI_MODEL   | The Gemini model you want to use. This must support at least 128k tokens. Vision will only work with vision capable models. | gemini-1.5-pro-latest |
 | GEMINI_API_KEY | This is your API key from [Google AI Studio](https://aistudio.google.com/).                                                 | someStringValue       |
+
+###### Google Vertex
+
+| Env Var                        | Description                                                                                                                 | Example                                            |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| GEMINI_MODEL                   | The Gemini model you want to use. This must support at least 128k tokens. Vision will only work with vision capable models. | gemini-1.5-pro-latest                              |
+| VERTEX_PROJECT                 | The Vertex AI project.                                                                                                      | myVertexProject                                    |
+| VERTEX_LOCATION                | The location of your project.                                                                                               | australia-southeast1                               |
+| GOOGLE_APPLICATION_CREDENTIALS | This is the file path to your                                                                                               | /path/to/credentials/in/container/credentials.json |
+
+To set the GOOGLE_APPLICATION_CREDENTIALS with Docker and Docker Compose, you'll
+need to use a volume mount.
+
+```yaml
+volumes:
+  - /path/to/credentials/on/host/credentials.json:/path/to/credentials/in/container/credentials.json:ro
+```
+
+For example, if the json credential file is in the root directory and is called
+`credentials.json`, your compose file would include:
+
+```yaml
+services:
+  academicid:
+      ...
+      environment:
+         ...
+         GOOGLE_APPLICATION_CREDENTIALS: '/app/credentials.json'
+      volumes:
+         - ./credentials.json:/app/credentials.json:ro
+```
 
 ---
 
@@ -223,9 +250,6 @@ To add Anthropic's `Claude` models, you can provide the following variables.
 | -------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------- |
 | CLAUDE_MODEL   | The Claude model you want to use. This must be a Claude 3 model (Haiku, Sonnet or Opus).                        | claude-3-opus-20240229 |
 | CLAUDE_API_KEY | This is your API key from [Anthropic](https://docs.anthropic.com/claude/reference/getting-started-with-the-api) | someStringValue        |
-
-The ability to use Claude models hosted in VertexAI or Amazon Bedrock is on the
-roadmap.
 
 ---
 
@@ -241,9 +265,9 @@ provide the following environmental variables.
 | CLAUDE_AWS_ACCESS_KEY | The AWS access key for the account with authorisation to access the model deployment.              | someStringValue                         |
 | CLAUDE_AWS_SECRET_KEY | The AWS secret key associated with the access key account.                                         | someStringValue                         |
 
-The service will default to the direct Anthropic API if provided, so to use AWS
-Claude, make sure you do not set the `CLAUDE_MODEL` and `CLAUDE_API_KEY`
-variables.
+The service will default to the direct Anthropic API if provided, so to use
+AWS-hosted Claude, make sure you do not set the `CLAUDE_MODEL` and
+`CLAUDE_API_KEY` variables.
 
 The ability to use Claude models hosted in VertexAI is on the roadmap.
 
@@ -276,21 +300,120 @@ To have this additional data from the
 
 ---
 
+##### Vector Length
+
+**! IMPORTANT:** Once this is set, it cannot be changed without wiping the
+database.
+
+This value sets the length of the embeddings vectors that are stored in the
+database. As vectors are stored in memory, the size of the vectors will impact
+the
+[memory usage](https://weaviate.io/developers/weaviate/concepts/resources#which-factors-drive-memory-usage)
+of the application. If you are hosting on a low spec machine, to avoid running
+out of memory, setting the vector length to 512 may be preferrable.
+
+| Env Var       | Description                                                                              | Example |
+| ------------- | ---------------------------------------------------------------------------------------- | ------- |
+| VECTOR_LENGTH | The length of the vector embeddings. Options are `512` or `1536`. The default is `1536`. | 512     |
+
+---
+
 A full list of other customisable components can be found below under heading
 `Further customisation`.
 
 **Once you have set these environment variables, make sure you save the
 `docker-compose.yml` file.**
 
+#### Files
+
+Sapien supports uploading files. These files are used within chat as well as
+providing a semantic search experience over your files. Files are uploaded in
+the chat interface and can then be accessed throughout the app with the library
+panel.
+
+There is no additional setup required to start using files, however, there are
+different options as to how files are stored.
+
+With version 0.1, files are handled by a seperate service as defined by the
+default docker compose file. This service is designed specifically to handle
+files and is required if you want access to file services in the app.
+
+By default, uploaded files are stored locally. The default compose file has a
+volume mount for where these files are stored:
+
+```yaml
+---
+volumes:
+  - ./files:/app/files
+```
+
+If files are deleted in the files directory, the content will remain in the
+database, but you will not be able to retrieve the file iteself (deleting the
+file within the app interface will remove both the stored data in the databased
+and the stored original file).
+
+If you prefer to store files in cloud storage, you can choose between one of the
+following options. To allow cloud storage, first set the `FILE_CLOUD_PROVIDER`
+env var and then provide the services required variables.
+
+| Env Var             | Description                                                                  | Example |
+| ------------------- | ---------------------------------------------------------------------------- | ------- |
+| FILE_CLOUD_PROVIDER | Has to match one of the following: `azure`, `aws`, `google`, `s3-compatible` | azure   |
+
+##### Azure
+
+| Env Var                    | Description                       | Example         |
+| -------------------------- | --------------------------------- | --------------- |
+| AZURE_STORAGE_ACCOUNT_NAME | The storage account name.         | academicidfilez |
+| AZURE_CONTAINER_NAME       | The container name for the files. | filez           |
+| AZURE_STORAGE_ACCOUNT_KEY  | The storage account key.          | someString      |
+
+##### AWS
+
+| Env Var               | Description                                       | Example         |
+| --------------------- | ------------------------------------------------- | --------------- |
+| AWS_REGION            | The region of the storage.                        | ap-southeast-1  |
+| AWS_ACCESS_KEY_ID     | The access key of an account with storage access. | someString      |
+| AWS_SECRET_ACCESS_KEY | The account's secret key.                         | someString      |
+| AWS_BUCKET_NAME       | The name of the storage bucket.                   | academicidfilez |
+
+##### Google
+
+There are two options for Google storage. The first and most simple is to
+provide Application Default Credentials. To do so, set the env var as noted
+under the Vertex AI Gemini configuration above. Make sure the ADC provides
+appropriate access to the storage. If you set the ADC, you only need to set the
+`GOOGLE_BUCKET_NAME` in the list below. If not using ADC, fill in all the env
+vars in this table:
+
+| Env Var             | Description                           | Example                                          |
+| ------------------- | ------------------------------------- | ------------------------------------------------ |
+| GOOGLE_PROJECT_ID   | The project ID containing storage.    | myStorageProject                                 |
+| GOOGLE_CLIENT_EMAIL | The client email with storage access. | storage@myStorageProject.iam.gserviceaccount.com |
+| GOOGLE_PRIVATE_KEY  | The secret account key.               | someString                                       |
+| GOOGLE_BUCKET_NAME  | The name of the storage bucket.       | academicidfilez                                  |
+
+##### s3-compatible
+
+This storage solution has been tested with Cloudflare R2 but theoretically any
+other s3-compatible should work.
+
+| Env Var                         | Description                     | Example                                                          |
+| ------------------------------- | ------------------------------- | ---------------------------------------------------------------- |
+| S3_COMPATIBLE_ENDPOINT          | The endpoint of the service.    | https://897ytvugbhjns897gu.r2.cloudflarestorage.com/your-storage |
+| S3_COMPATIBLE_ACCESS_KEY_ID     | The access key ID.              | someString                                                       |
+| S3_COMPATIBLE_SECRET_ACCESS_KEY | The secret access key.          | someString                                                       |
+| S3_COMPATIBLE_BUCKET_NAME       | The name of the storage bucket. | academicidfilez                                                  |
+
 #### Backups
 
-With version 0.02, you can now set up Weaviate with
+You can set up Weaviate with
 [backup modules](https://weaviate.io/developers/weaviate/configuration/backups)
 and the app will trigger the database to backup every 24 hours.
 
 Follow the instructions above to set up Weaviate with backups.
 
-Each backup will have a unique ID in the form of `date-sapien-backup`. You can
+Each backup will have a unique ID in the form of `<DATE>-sapien-backup`. You can
 find these IDs in the logs, or they should be the name of the backup items in
 the location you have set the backups to.
 
@@ -399,49 +522,26 @@ is replaced.
 
 ## Further customisation
 
-Below is a list of all environmental variables that can be set.
+Below is a list of additional environmental variables that can be set.
 
-| Environment Variable               | Description                                                                                                                               |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `BACKEND_PORT`                     | Port number for the backend server. Defaults to 3030 if not specified.                                                                    |
-| `FRONTEND_URL`                     | URL for the frontend application. Defaults to `http://localhost:3000`.                                                                    |
-| `BACKEND_URL`                      | URL for the backend application. Defaults to `http://localhost`.                                                                          |
-| `TIMEZONE`                         | Timezone used for logging time stamps. E.g. `Australia/Sydney`. Defaults to `UTC`                                                         |
-| `CUSTOM_PROMPT`                    | You can provide a custom prompt text to better tailor Sapien's behaviour to your desired usecase. See release note 0.05 for more details. |
-| `PAPERBUZZ_EMAIL`                  | Email address for Paperbuzz service notifications.                                                                                        |
-| `WEAVIATE_HOST`                    | Host address for the Weaviate service. Defaults to `weaviate:8080`.                                                                       |
-| `WEAVIATE_PORT`                    | Port for Weaviate HTTP requests. Defaults to `8080`.                                                                                      |
-| `WEAVIATE_GRPC_HOST`               | Host address for Weaviate GRPC requests. Defaults to `weaviate`.                                                                          |
-| `WEAVIATE_GRPC_PORT`               | Port for Weaviate GRPC requests. Defaults to `50051`.                                                                                     |
-| `WEAVIATE_SCHEME`                  | Scheme for the Weaviate service (e.g., `http`, `https`). Defaults to `http`.                                                              |
-| `WEAVIATE_API_KEY`                 | API key for the Weaviate service.                                                                                                         |
-| `WEAVIATE_BACKUP_RESTORE_ID`       | ID for Weaviate backup and restore operations.                                                                                            |
-| `WEAVIATE_BACKUP_HOURLY_FREQUENCY` | How frequent, in hours, Weaviate DB backups should run; default is 24 hours.                                                              |
-| `REDIS_URL`                        | URL for the Redis server. Defaults to `redis://redis:6379`.                                                                               |
-| `REDIS_PW`                         | Password for the Redis server.                                                                                                            |
-| `OPENAI_KEY`                       | API key for OpenAI services.                                                                                                              |
-| `OPEN_AI_TEXT_GEN_MODEL`           | Model name for OpenAI text generation.                                                                                                    |
-| `AZURE_OPENAI_KEY`                 | API key for Azure OpenAI services.                                                                                                        |
-| `AZURE_OPENAI_API_VERSION`         | API version for Azure OpenAI services. Defaults to `2024-02-15-preview`.                                                                  |
-| `USING_GPT4O`                      | Flag indicating whether GPT-4o is being used. Defaults to `false`. This only needs to be set if using Azure.                              |
-| `AZURE_OPENAI_RESOURCE`            | Resource name for Azure OpenAI services.                                                                                                  |
-| `AZURE_OPENAI_TXT_DEPLOYMENT`      | Deployment name for Azure OpenAI text services.                                                                                           |
-| `AZURE_OPENAI_EMBED_DEPLOYMENT`    | Deployment name for Azure OpenAI embedding services.                                                                                      |
-| `AZURE_OPENAI_VISION_RESOURCE`     | Resource name for Azure OpenAI vision services.                                                                                           |
-| `AZURE_OPENAI_VISION_DEPLOYMENT`   | Deployment name for Azure OpenAI vision services.                                                                                         |
-| `AZURE_OPENAI_VISION_KEY`          | API key for Azure OpenAI vision services.                                                                                                 |
-| `AZURE_OPENAI_IMG_RESOURCE`        | Resource name for Azure OpenAI image services.                                                                                            |
-| `AZURE_OPENAI_IMG_DEPLOYMENT`      | Deployment name for Azure OpenAI image services.                                                                                          |
-| `AZURE_OPENAI_IMG_KEY`             | API key for Azure OpenAI image services.                                                                                                  |
-| `CLAUDE_MODEL`                     | Model name for Claude AI services.                                                                                                        |
-| `CLAUDE_API_KEY`                   | API key for Claude AI services.                                                                                                           |
-| `CLAUDE_AWS_MODEL`                 | The Claude model being access through AWS (model naming is different than direct Anthropic access)                                        |
-| `CLAUDE_AWS_REGION`                | The AWS region the model is deployed in.                                                                                                  |
-| `CLAUDE_AWS_ACCESS_KEY`            | The AWS access key for the account with authorisation to access the model deployment.                                                     |
-| `CLAUDE_AWS_SECRET_KEY`            | The AWS secret key associated with the access key account.                                                                                |
-| `GEMINI_MODEL`                     | Model name for Gemini AI services.                                                                                                        |
-| `GEMINI_API_KEY`                   | API key for Gemini AI services.                                                                                                           |
-| `SEMANTIC_SCHOLAR_API_KEY`         | API key for Semantic Scholar services.                                                                                                    |
+| Environment Variable               | Description                                                                                                                                                                                                                                                                                                               |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BACKEND_PORT`                     | Port number for the backend server. Defaults to 3030 if not specified.                                                                                                                                                                                                                                                    |
+| `FRONTEND_URL`                     | URL for the frontend application. Defaults to `http://localhost:3000`.                                                                                                                                                                                                                                                    |
+| `BACKEND_URL`                      | URL for the backend application. Defaults to `http://localhost`.                                                                                                                                                                                                                                                          |
+| `TIMEZONE`                         | Timezone used for logging time stamps. E.g. `Australia/Sydney`. Defaults to `UTC`                                                                                                                                                                                                                                         |
+| `CUSTOM_PROMPT`                    | You can provide a custom prompt to better tailor Sapien's behaviour to your desired usecase. See release note 0.05 for more details. This may impact the intended performance of the chatbot, including thinking and other behaviour. It is advisable to first test setting the `Description Prompt` on the account page. |
+| `WEAVIATE_HOST`                    | Host address for the Weaviate service. Defaults to `weaviate:8080`.                                                                                                                                                                                                                                                       |
+| `WEAVIATE_PORT`                    | Port for Weaviate HTTP requests. Defaults to `8080`.                                                                                                                                                                                                                                                                      |
+| `WEAVIATE_GRPC_HOST`               | Host address for Weaviate GRPC requests. Defaults to `weaviate`.                                                                                                                                                                                                                                                          |
+| `WEAVIATE_GRPC_PORT`               | Port for Weaviate GRPC requests. Defaults to `50051`.                                                                                                                                                                                                                                                                     |
+| `WEAVIATE_SCHEME`                  | Scheme for the Weaviate service (e.g., `http`, `https`). Defaults to `http`.                                                                                                                                                                                                                                              |
+| `WEAVIATE_API_KEY`                 | API key for the Weaviate service.                                                                                                                                                                                                                                                                                         |
+| `WEAVIATE_BACKUP_RESTORE_ID`       | ID for Weaviate backup and restore operations.                                                                                                                                                                                                                                                                            |
+| `WEAVIATE_BACKUP_HOURLY_FREQUENCY` | How frequent, in hours, Weaviate DB backups should run; default is 24 hours.                                                                                                                                                                                                                                              |
+| `REDIS_URL`                        | URL for the Redis server. Defaults to `redis://redis:6379`.                                                                                                                                                                                                                                                               |
+| `REDIS_PW`                         | Password for the Redis server.                                                                                                                                                                                                                                                                                            |
+| `COLLECTOR_ENDPOINT`               | The endpoint for an Open Telemetry compatible collector. This can be used to view metrics generated by the app through a stack such as Prometheus + Grafana.                                                                                                                                                              |
 
 ## Using Microsoft Auth within your Tenant
 

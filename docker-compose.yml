@@ -1,7 +1,7 @@
 ---
 services:
   academicid:
-    image: acadmicid/sapien:0.08
+    image: acadmicid/sapien:0.1
     dns:
       - 1.1.1.1
       - 1.0.0.1
@@ -61,8 +61,15 @@ services:
     depends_on:
       - weaviate
       - redis
+      - academicid_fs
     volumes:
       - ./monitoring/logs:/app/logs
+      - ./files:/app/files
+    restart: unless-stopped
+  academicid_fs:
+    image: acadmicid/file_services:0.1
+    ports:
+      - 5500:5500
     restart: unless-stopped
   weaviate:
     command:
