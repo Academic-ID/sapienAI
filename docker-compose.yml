@@ -1,7 +1,7 @@
 ---
 services:
   academicid:
-    image: acadmicid/sapien:0.1
+    image: acadmicid/sapien:0.1.1
     dns:
       - 1.1.1.1
       - 1.0.0.1
@@ -67,7 +67,7 @@ services:
       - ./files:/app/files
     restart: unless-stopped
   academicid_fs:
-    image: acadmicid/file_services:0.1
+    image: acadmicid/file_services:0.1.1
     ports:
       - 5500:5500
     restart: unless-stopped
