@@ -14,31 +14,28 @@ superior AI assistant for academics, researchers and students.
 
 sapienAI provides a chat interface similar in function to ChatGPT, Claude or
 other genAI interfaces. Similar to other genAI chat interfaces, you can converse
-with the AI models, upload images for vision functionality and have Sapien
-generate images. However, Sapien's chat experience ticks a few boxes that you
-may find appealing compared to other options.
+with the AI models, upload images for vision functionality and files, and have
+Sapien generate images. However, Sapien's chat experience ticks a few boxes that
+you may find appealing compared to other options.
 
-1. **GPT4, Claude Opus, Google Gemini:** One interface to access all three of
+1. **GPT4, Claude Models, Google Gemini:** One interface to access all three of
    the top publicly available generative AI models. You can choose which model
    powers a chat, including changing models mid-chat to take advantage of the
    different capabilities of each model.
 2. **All data is stored locally on your device:** Everything fed into the app,
-   including all messages (sent and received) and images (uploaded and
-   generated), remains stored on your device. The only time data leaves the
+   including all messages (sent and received), images (uploaded and generated)
+   and files, remains stored on your device. The only time data leaves the
    system is when the generative AI model is called at inference time.
 3. **You set the generative AI model endpoints.** If you have requirements that
    data remains within a specific geographic region, you can set Sapien up to
    use Azure OpenAI service resources in your desired region. Similar
-   customisation for AWS and VertexAI (Claude and Gemini models) will be
-   incorporated as these platforms widen service availability.
+   customisation for AWS and VertexAI is available.
 4. **All responses backed by actual academic papers.** Reduce the risk of
    hallucination, improve model accuracy and have direct access to academic
-   papers. Sapien undertakes a quick search for relevant academic papers for
-   each response and uses these papers to inform the advice given to you. This
-   feature can be toggled off if not needed or to reduce token usage.
+   papers. Sapien undertakes a search for relevant academic papers for each
+   response and uses these papers to inform its response to you.
 5. **Academic focused:** Sapien is prompted to act as a non-biased and
-   highly-intelligent academic advisor. While this is Sapien's starting point,
-   it can be used in all settings. You could think of Sapien as a highly
+   highly-intelligent academic advisor. You could think of Sapien as a highly
    knowledgeable expert in all domains. The ability to provide customised
    instruction ensures Sapien is flexible and highly tailored to your needs.
    Sapien also has cross-chat memory. When you provide custom instructions, as
@@ -61,12 +58,12 @@ instead to challenge your assumptions, ensuring your arguments are robust and
 well-formed.
 
 The writing assistant also provides direct access to relevant academic papers,
-academic experts, and even items in your Zotero library through the Zotero
-integration.
+academic experts (through ExpertID), and items in your Zotero library through
+the Zotero integration.
 
 ## Beta notice!
 
-This version of sapienAI is an early beta. Testing has been limited and only on
+SapienAI is still under active development. Testing has been limited and only on
 a restricted range of devices. As such, there are no guarantees that the service
 will work across all devices. We encourage you to raise issues with us if you
 come across any to help us speed up our work towards releasing a stable version.
@@ -171,21 +168,21 @@ this up, we will streamline the environmental variables that need to be set,
 however for now, you must set all the variables below, even if the vision and
 txt deployments are the same resources.
 
-| Env Var                        | Description                                                                                                                                          | Example            |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| AZURE_OPENAI_API_V             | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview |
-| AZURE_OPENAI_KEY               | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue    |
-| AZURE_OPENAI_RESOURCE          | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen     |
-| AZURE_OPENAI_TXT_DEPLOYMENT    | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o              |
-| AZURE_OPENAI_TXT_DEPLOYMENT_35 | This is the name of the deployment for a 3.5 family model model.                                                                                     | gpt-35             |
-| AZURE_OPENAI_EMBED_DEPLOYMENT  | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings         |
-| AZURE_OPENAI_VISION_RESOURCE   | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision      |
-| AZURE_OPENAI_VISION_DEPLOYMENT | This is the name of the vision model deployment.                                                                                                     | vision             |
-| AZURE_OPENAI_VISION_KEY        | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                               | someStringValue    |
-| AZURE_OPENAI_IMG_RESOURCE      | This is the name of the resource containing the Dalle3 deployment.                                                                                   | sapien-img-gen     |
-| AZURE_OPENAI_IMG_KEY           | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue    |
-| AZURE_OPENAI_IMG_DEPLOYMENT    | This is the name of the Dalle3 model deployment                                                                                                      | dalle3             |
-| USING_GPT4O                    | This needs to be set to 'true' if using an Azure GPT4o model                                                                                         | true               |
+| Env Var                          | Description                                                                                                                                          | Example            |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| AZURE_OPENAI_API_VERSION         | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview |
+| AZURE_OPENAI_KEY                 | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue    |
+| AZURE_OPENAI_RESOURCE            | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen     |
+| AZURE_OPENAI_TXT_DEPLOYMENT      | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o              |
+| AZURE_OPENAI_TXT_DEPLOYMENT_MINI | This is the name of the deployment for a GPT40 Mini model model.                                                                                     | gpt-4o-mini        |
+| AZURE_OPENAI_EMBED_DEPLOYMENT    | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings         |
+| AZURE_OPENAI_VISION_RESOURCE     | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision      |
+| AZURE_OPENAI_VISION_DEPLOYMENT   | This is the name of the vision model deployment.                                                                                                     | vision             |
+| AZURE_OPENAI_VISION_KEY          | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                               | someStringValue    |
+| AZURE_OPENAI_IMG_RESOURCE        | This is the name of the resource containing the Dalle3 deployment.                                                                                   | sapien-img-gen     |
+| AZURE_OPENAI_IMG_KEY             | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue    |
+| AZURE_OPENAI_IMG_DEPLOYMENT      | This is the name of the Dalle3 model deployment                                                                                                      | dalle3             |
+| USING_GPT4O                      | This needs to be set to 'true' if using an Azure GPT4o model                                                                                         | true               |
 
 ---
 
