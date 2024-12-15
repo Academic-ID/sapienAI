@@ -1,7 +1,7 @@
 # sapienAI
 
 Self-hosted academic chatbot and writing assistant leveraging the latest AI
-models, including GPT4, Claude Opus and Gemini Pro
+models, including GPT4, o1, Claude Models and Gemini
 
 ## What is Sapien - just another genAI wrapper?
 
@@ -18,34 +18,29 @@ with the AI models, upload images for vision functionality and files, and have
 Sapien generate images. However, Sapien's chat experience ticks a few boxes that
 you may find appealing compared to other options.
 
-1. **GPT4, Claude Models, Google Gemini:** One interface to access all three of
-   the top publicly available generative AI models. You can choose which model
-   powers a chat, including changing models mid-chat to take advantage of the
-   different capabilities of each model.
-2. **All data is stored locally on your device:** Everything fed into the app,
-   including all messages (sent and received), images (uploaded and generated)
-   and files, remains stored on your device. The only time data leaves the
-   system is when the generative AI model is called at inference time.
-3. **You set the generative AI model endpoints.** If you have requirements that
-   data remains within a specific geographic region, you can set Sapien up to
-   use Azure OpenAI service resources in your desired region. Similar
-   customisation for AWS and VertexAI is available.
-4. **All responses backed by actual academic papers.** Reduce the risk of
-   hallucination, improve model accuracy and have direct access to academic
-   papers. Sapien undertakes a search for relevant academic papers for each
-   response and uses these papers to inform its response to you.
-5. **Academic focused:** Sapien is prompted to act as a non-biased and
-   highly-intelligent academic advisor. You could think of Sapien as a highly
-   knowledgeable expert in all domains. The ability to provide customised
-   instruction ensures Sapien is flexible and highly tailored to your needs.
-   Sapien also has cross-chat memory. When you provide custom instructions, as
-   you converse with Sapien, it can update these instructions to provide the
-   best ongoing assistant experience possible.
-6. **A very nice chat experience:** While we may be biased on this front as we
-   built it how we wanted, Sapien's chat interface is clutter-free, offers
-   night/day mode and is optimised for both web and mobile. Sapien works best
-   when installed as a web app on your device (e.g.
-   [Chrome](https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DDesktop)/[Edge](https://support.microsoft.com/en-au/topic/install-manage-or-uninstall-apps-in-microsoft-edge-0c156575-a94a-45e4-a54f-3a84846f6113)/[iPhone](https://www.macrumors.com/how-to/use-web-apps-iphone-ipad/)).
+- **GPT4, o1, Claude Models, Google Gemini:** One interface to access the top
+  publicly available generative AI models. You can choose which model powers a
+  chat, including changing models mid-chat to take advantage of the different
+  capabilities of each model.
+- **Realtime audio chat:** Have a realtime conversation with SapienAI.
+- **All data is stored locally on your device:** Everything fed into the app,
+  including all messages (sent and received), images (uploaded and generated)
+  and files, remains stored on your device. The only time data leaves the system
+  is when the generative AI model is called at inference time.
+- **Model hosting flexibility.** Models can be accessed directly from OpenAI,
+  Anthropic or Google, or you can connect to these models through Azure, AWS or
+  Google Vertex.
+- **All responses backed by actual academic papers.** Reduce the risk of
+  hallucination, improve model accuracy and have direct access to academic
+  papers. Sapien undertakes a search for relevant academic papers for each
+  response and uses these papers to inform its response to you.
+- **Academic focused:** Sapien is prompted to act as a non-biased and
+  highly-intelligent academic advisor. You could think of Sapien as a highly
+  knowledgeable expert in all domains. The ability to provide customised
+  instruction ensures Sapien is flexible and highly tailored to your needs.
+  Sapien also has cross-chat memory. When you provide custom instructions, as
+  you converse with Sapien, it can update these instructions to provide the best
+  ongoing assistant experience possible.
 
 ### 2. AI-Powered Academic Writing Engine
 
@@ -61,12 +56,26 @@ The writing assistant also provides direct access to relevant academic papers,
 academic experts (through ExpertID), and items in your Zotero library through
 the Zotero integration.
 
+**This feature is being depreciated to be replaced by a better AI-writing
+experience early in 2025**
+
+### 3. Research Spaces
+
+Research spaces allow you to upload documents and have the AI provide summaries
+and a literature review. You can then semantically search over these documents
+to find relevant documents and chunks within documents.
+
+### 4. Zotero Semantic Search
+
+Connect your Zotero account and semantically search over your items.
+
 ## Beta notice!
 
 SapienAI is still under active development. Testing has been limited and only on
-a restricted range of devices. As such, there are no guarantees that the service
-will work across all devices. We encourage you to raise issues with us if you
-come across any to help us speed up our work towards releasing a stable version.
+a small range of devices. As such, there are no guarantees that the service will
+work flawlessly across all devices. We encourage you to raise issues with us if
+you come across any to help us speed up our work towards releasing more stable
+versions.
 
 ## Getting started
 
@@ -88,6 +97,11 @@ of the Docker Compose file. If you have an existing instance of either, you may
 be able to leverage it by configuring the environmental variables as per the
 instructions below under `Further customisation`.
 
+The service also requires a storage service (since version 0.1.5). The Docker
+Compose example here includes the Minio service as a locally hosted option. If
+you do not want to use Minio remove the `minio` and `minio_mc` services from the
+Docker Compose file.
+
 ### Install
 
 You can clone this repository or download it as a zip file (and then unzip once
@@ -101,38 +115,24 @@ or Notepad on Windows.
 
 ### Setting the environmental variables
 
-SapienAI has been built to be as customisable as possible. An outline of the
-full set of values you can customise can be found in the table under the
-`Further customisation` section below.
+SapienAI has been built to be as customisable as possible. All configurable
+options are outlined in the `example.env` file.
 
-These environmental variables are to be set in the `docker-compose.yml` file
-under the `environment` section of the `academicid` service.
-
-The `docker-compose.yml` file has commented out the common env variables noted
-below. To set the variables, remove the # before the variable and provide the
-value after the colon. For example:
-
-```yml
-AZURE_OPENAI_IMG_RESOURCE: acid-vision
-```
+To get started, rename the `example.env` file to `.env` and fill out the
+variables in that file as outlined below.
 
 The only requirement that you must provide is either an `OpenAI API key` or set
-up the `Azure OpenAI Service deployment` configuration.
+up the `Azure OpenAI Service deployment` configuration and then a storage
+service provider.
+
+Where the below denotes a default or the .env file has a default value noted,
+these only need to be set if you want to set a value other than the default.
 
 #### OpenAI Key
 
 The quickest way to get started is to set the `OPENAI_KEY` environmental value.
 This is your
 [OpenAI API key](https://platform.openai.com/docs/quickstart/account-setup).
-
-Once this is set, and if you do not want to provide any other functionality, you
-are good to skip the rest of the instructions for setting the environmental
-variables and move on to starting the service.
-
-If you want to set the specific model version, you can set the
-`OPEN_AI_TEXT_GEN_MODEL` env variable. Otherwise, it will default to
-`gpt-4-turbo`. If set, this must be a recent model that handles vision and tool
-calling.
 
 ---
 
@@ -143,46 +143,119 @@ variables. At present, due to the variable availability of different models with
 different capabilities, you have to set specific deployments for different
 functionalities.
 
-There are three distinct Azure Resources that need to be set:
+There are five distinct Azure Resources that can be set (only resource one is
+absolutely required):
 
 1. The resource for text generation and embeddings. These functionalities need
    to be contained within the same resource. There will need to be a deployment
    for the `text-embedding-3-small` model, and a deployment for a GPT4 family
-   model that supports 128k tokens and a deployment for a 3.5 family model.
-2. A resource for a vision deployment endpoint. This must contain a GPT4-vision
-   deployment.
-3. A resource for a Dall.e 3 deployment. This must have a Dall.e 3 deployment.
+   model that supports 128k tokens and a deployment for a 4o-mini model.
+2. A resource for a vision deployment endpoint. This must contain a vision
+   capable GPT4-family model.
+3. A resource for a Dall.e 3 deployment.
+4. A resource for an o1 & o1-mini deployment.
+5. A resource for a realtime chat.
 
 These resources can overlap. If you have a resource in a region that has the
 availability for all features, you can set the env var for each feature to the
 same resource (but you still have to set each env var).
 
 If you do not set the Azure vision resource, and no other vision capable models
-are set, you will not be able to use vision capabilities.
+are set, you will not be able to use vision capabilities in the chat.
 
 This is somewhat unwiedly, but until Azure provides all models in all regions,
-this is the way.
+this is the best way to maximise what can be achieved using Azure.
 
-To simplify deployments, we are moving to only support GPT4o models. As we clean
-this up, we will streamline the environmental variables that need to be set,
-however for now, you must set all the variables below, even if the vision and
-txt deployments are the same resources.
+**Note:** o1 models in Azure currently do not support streaming, meaning chat
+responses will only be returned after the entire response is generated (opposed
+to chunks being returned as they are generated).
 
-| Env Var                          | Description                                                                                                                                          | Example            |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| AZURE_OPENAI_API_VERSION         | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview |
-| AZURE_OPENAI_KEY                 | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue    |
-| AZURE_OPENAI_RESOURCE            | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen     |
-| AZURE_OPENAI_TXT_DEPLOYMENT      | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o              |
-| AZURE_OPENAI_TXT_DEPLOYMENT_MINI | This is the name of the deployment for a GPT40 Mini model model.                                                                                     | gpt-4o-mini        |
-| AZURE_OPENAI_EMBED_DEPLOYMENT    | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings         |
-| AZURE_OPENAI_VISION_RESOURCE     | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision      |
-| AZURE_OPENAI_VISION_DEPLOYMENT   | This is the name of the vision model deployment.                                                                                                     | vision             |
-| AZURE_OPENAI_VISION_KEY          | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                               | someStringValue    |
-| AZURE_OPENAI_IMG_RESOURCE        | This is the name of the resource containing the Dalle3 deployment.                                                                                   | sapien-img-gen     |
-| AZURE_OPENAI_IMG_KEY             | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue    |
-| AZURE_OPENAI_IMG_DEPLOYMENT      | This is the name of the Dalle3 model deployment                                                                                                      | dalle3             |
-| USING_GPT4O                      | This needs to be set to 'true' if using an Azure GPT4o model                                                                                         | true               |
+| Env Var                          | Description                                                                                                                                          | Example                                                                                                    |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| AZURE_OPENAI_API_VERSION         | This is the API version that will be used across all different deployments set below.                                                                | 2024-02-15-preview                                                                                         |
+| AZURE_OPENAI_KEY                 | This is the API key associated with the resource used for text generation (so the key from the resource set as the `AZURE_OPENAI_RESOURCE` variable) | someStringValue                                                                                            |
+| AZURE_OPENAI_RESOURCE            | This is the name of the resource containing the text generation and embed deployments.                                                               | sapien-txt-gen                                                                                             |
+| AZURE_OPENAI_TXT_DEPLOYMENT      | This is the name of the deployment for a GPT-4-turbo model.                                                                                          | gpt4o                                                                                                      |
+| AZURE_OPENAI_TXT_DEPLOYMENT_MINI | This is the name of the deployment for a GPT40 Mini model model.                                                                                     | gpt-4o-mini                                                                                                |
+| AZURE_OPENAI_EMBED_DEPLOYMENT    | This is the name of the deployment for a `text-embedding-3-small` model.                                                                             | embeddings                                                                                                 |
+| AZURE_OPENAI_VISION_RESOURCE     | This is the name of the resource containing the vision-enabled GPT4 deployment.                                                                      | sapien-vision                                                                                              |
+| AZURE_OPENAI_VISION_DEPLOYMENT   | This is the name of the vision model deployment.                                                                                                     | vision                                                                                                     |
+| AZURE_OPENAI_VISION_KEY          | The API key for the resource set as the `AZURE_OPENAI_VISION_RESOURCE`                                                                               | someStringValue                                                                                            |
+| AZURE_OPENAI_IMG_RESOURCE        | This is the name of the resource containing the Dalle3 deployment.                                                                                   | sapien-img-gen                                                                                             |
+| AZURE_OPENAI_IMG_KEY             | The API key for the resource set as the `AZURE_OPENAI_IMG_RESOURCE`                                                                                  | someStringValue                                                                                            |
+| AZURE_OPENAI_IMG_DEPLOYMENT      | This is the name of the Dalle3 model deployment                                                                                                      | dalle3                                                                                                     |
+| USING_GPT4O                      | This needs to be set to 'true' if using an Azure GPT4o model                                                                                         | true                                                                                                       |
+| AZURE_REALTIME_URL               | The full URL pointing to your realtime API deployment.                                                                                               | wss://low-latency.openai.azure.com/openai/realtime?api-version=2024-10-01-preview&deployment=gpt4oRealtime |
+| AZURE_REALTIME_KEY               | This is the name of the vision model deployment.                                                                                                     | someStringValue                                                                                            |
+| AZURE_OPENAI_O1_KEY              | The API key for the resource set as the `AZURE_OPENAI_O1_RESOURCE`                                                                                   | someStringValue                                                                                            |
+| AZURE_OPENAI_O1_RESOURCE         | This is the name of the resource containing the o1 deployments.                                                                                      | sapien-o1                                                                                                  |
+| AZURE_OPENAI_O1_DEPLOYMENT       | The o1 model deployment.                                                                                                                             | o1-preview                                                                                                 |
+| AZURE_OPENAI_O1_MINI_DEPLOYMENT  | The o1-mini model deployment.                                                                                                                        | o1-mini                                                                                                    |
+
+---
+
+#### Storage
+
+Sapien supports uploading files in the chat and in research spaces. To store
+these files, a storage provider needs to be available.
+
+The app can use Azure Storage, Google Cloud Storage, Amazon S3 Storage or some
+other S3-compatible storage (e.g. Cloudflare R2).
+
+If using the default Docker Compose file with Minio the default values below can
+be used (meaning the variables in the .env file under **FILE STORAGE** can be
+left commented out).
+
+| Env Var             | Description                                                                  | Example       |
+| ------------------- | ---------------------------------------------------------------------------- | ------------- |
+| FILE_CLOUD_PROVIDER | Has to match one of the following: `azure`, `aws`, `google`, `s3-compatible` | s3-compatible |
+
+##### Azure
+
+| Env Var                    | Description                       | Example         |
+| -------------------------- | --------------------------------- | --------------- |
+| AZURE_STORAGE_ACCOUNT_NAME | The storage account name.         | academicidfilez |
+| AZURE_CONTAINER_NAME       | The container name for the files. | filez           |
+| AZURE_STORAGE_ACCOUNT_KEY  | The storage account key.          | someString      |
+
+##### AWS
+
+| Env Var               | Description                                       | Example         |
+| --------------------- | ------------------------------------------------- | --------------- |
+| AWS_REGION            | The region of the storage.                        | ap-southeast-1  |
+| AWS_ACCESS_KEY_ID     | The access key of an account with storage access. | someString      |
+| AWS_SECRET_ACCESS_KEY | The account's secret key.                         | someString      |
+| AWS_BUCKET_NAME       | The name of the storage bucket.                   | academicidfilez |
+
+##### Google
+
+There are two options for Google storage. The first and most simple is to
+provide Application Default Credentials. To do so, set the env var as noted
+under the Vertex AI Gemini configuration below. Make sure the ADC provides
+appropriate access to the storage. If you set the ADC, you only need to set the
+`GOOGLE_BUCKET_NAME` in the list below. If not using ADC, fill in all the env
+vars in this table:
+
+| Env Var             | Description                           | Example                                          |
+| ------------------- | ------------------------------------- | ------------------------------------------------ |
+| GOOGLE_PROJECT_ID   | The project ID containing storage.    | myStorageProject                                 |
+| GOOGLE_CLIENT_EMAIL | The client email with storage access. | storage@myStorageProject.iam.gserviceaccount.com |
+| GOOGLE_PRIVATE_KEY  | The secret account key.               | someString                                       |
+| GOOGLE_BUCKET_NAME  | The name of the storage bucket.       | academicidfilez                                  |
+
+##### s3-compatible
+
+This storage solution has been tested with Cloudflare R2 but theoretically any
+other s3-compatible should work.
+
+| Env Var                         | Description                                                                                              | Example                                                          |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| S3_COMPATIBLE_ENDPOINT          | The endpoint of the service.                                                                             | https://897ytvugbhjns897gu.r2.cloudflarestorage.com/your-storage |
+| S3_COMPATIBLE_ACCESS_KEY_ID     | The access key ID.                                                                                       | someString                                                       |
+| S3_COMPATIBLE_SECRET_ACCESS_KEY | The secret access key.                                                                                   | someString                                                       |
+| S3_COMPATIBLE_BUCKET_NAME       | The name of the storage bucket.                                                                          | academicidfilez                                                  |
+| S3_COMPATIBLE_FORCE_PATH_STYLE  | If using path style urls, set this value to 'true'.                                                      | true                                                             |
+| S3_COMPATIBLE_ENDPOINT_SERVICE  | This is only for s3 services hosted using the same Docker Compose file - see .env file for more details. | minio                                                            |
 
 ---
 
@@ -224,17 +297,19 @@ volumes:
 ```
 
 For example, if the json credential file is in the root directory and is called
-`credentials.json`, your compose file would include:
+`credentials.json`, your `.env` file would include:
 
-```yaml
-services:
-  academicid:
-      ...
-      environment:
-         ...
-         GOOGLE_APPLICATION_CREDENTIALS: '/app/credentials.json'
-      volumes:
-         - ./credentials.json:/app/credentials.json:ro
+```env
+GOOGLE_APPLICATION_CREDENTIALS='/app/credentials.json'
+```
+
+The Docker Compose file, under the backend service, would have the following:
+
+```yml
+env_file:
+  - .env
+volumes:
+  - ./credentials.json:/app/credentials.json:ro
 ```
 
 ---
@@ -315,92 +390,68 @@ out of memory, setting the vector length to 512 may be preferrable.
 
 ---
 
+##### Response Length
+
+This value sets the max token vectors of a chat response. This can be any number
+less than 16,384. If set higher than what is capable of the models being used,
+the response may be cut off. o1 and o1-mini models have their own separately
+configurable max token count.
+
+You can reduce this value to reduce token usage if the max value is not
+available.
+
+| Env Var                     | Description                                                                            | Example |
+| --------------------------- | -------------------------------------------------------------------------------------- | ------- |
+| MAX_OUTPUT_TOKENS           | The maximum number of tokens a model will be allowed to output. The default is `16384` | 4096    |
+| O1_MAX_RESPONSE_TOKENS      | The maximum number of tokens a model will be allowed to output. The default is `32768` | 16384   |
+| O1_MINI_MAX_RESPONSE_TOKENS | The maximum number of tokens a model will be allowed to output. The default is `65000` | 32768   |
+
+---
+
+##### Max Conversation Length
+
+The most intense use of tokens comes when conversations grow in length. To
+reduce overall token usage, you can set the maximum token count of a
+conversation. This results in conversations longer than this number being
+summarised before being sent to the model. The summary is generated with the
+less-expensive 4o-mini model with full context meaning, in theory, the summary
+should include any pertinent information from older conversation messages.
+
+| Env Var                      | Description                                                                                                                   | Example |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- |
+| MAX_CONVERSATION_TOKEN_COUNT | The maximum number of tokens sent to the model when generating a response. The default is `124000`. The value must be > 35000 | 75000   |
+
+---
+
+##### Parallel Text Extraction
+
+To speed up the Research Space's ability to handle large volumes of documents,
+documents can be processed in parallel. The main restraint to doing this is the
+token throughput available to you and your computer's available resources.
+
+| Env Var     | Description                                                                                                                   | Example |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- |
+| MAX_WORKERS | The maximum number of tokens sent to the model when generating a response. The default is `124000`. The value must be > 35000 | 75000   |
+
+---
+
+##### Advanced Extraction
+
+Only set this if you want to extract text from files using the GPT4o vision
+capabilities; this results in better text extraction and performance in semantic
+search and RAG, however, it is far more expensive.
+
+| Env Var             | Description                                                                                                                   | Example |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------- |
+| ADVANCED_EXTRACTION | The maximum number of tokens sent to the model when generating a response. The default is `124000`. The value must be > 35000 | 75000   |
+
+---
+
 A full list of other customisable components can be found below under heading
 `Further customisation`.
 
-**Once you have set these environment variables, make sure you save the
-`docker-compose.yml` file.**
-
-#### Files
-
-Sapien supports uploading files. These files are used within chat as well as
-providing a semantic search experience over your files. Files are uploaded in
-the chat interface and can then be accessed throughout the app with the library
-panel.
-
-There is no additional setup required to start using files, however, there are
-different options as to how files are stored.
-
-With version 0.1, files are handled by a seperate service as defined by the
-default docker compose file. This service is designed specifically to handle
-files and is required if you want access to file services in the app.
-
-By default, uploaded files are stored locally. The default compose file has a
-volume mount for where these files are stored:
-
-```yaml
----
-volumes:
-  - ./files:/app/files
-```
-
-If files are deleted in the files directory, the content will remain in the
-database, but you will not be able to retrieve the file iteself (deleting the
-file within the app interface will remove both the stored data in the databased
-and the stored original file).
-
-If you prefer to store files in cloud storage, you can choose between one of the
-following options. To allow cloud storage, first set the `FILE_CLOUD_PROVIDER`
-env var and then provide the services required variables.
-
-| Env Var             | Description                                                                  | Example |
-| ------------------- | ---------------------------------------------------------------------------- | ------- |
-| FILE_CLOUD_PROVIDER | Has to match one of the following: `azure`, `aws`, `google`, `s3-compatible` | azure   |
-
-##### Azure
-
-| Env Var                    | Description                       | Example         |
-| -------------------------- | --------------------------------- | --------------- |
-| AZURE_STORAGE_ACCOUNT_NAME | The storage account name.         | academicidfilez |
-| AZURE_CONTAINER_NAME       | The container name for the files. | filez           |
-| AZURE_STORAGE_ACCOUNT_KEY  | The storage account key.          | someString      |
-
-##### AWS
-
-| Env Var               | Description                                       | Example         |
-| --------------------- | ------------------------------------------------- | --------------- |
-| AWS_REGION            | The region of the storage.                        | ap-southeast-1  |
-| AWS_ACCESS_KEY_ID     | The access key of an account with storage access. | someString      |
-| AWS_SECRET_ACCESS_KEY | The account's secret key.                         | someString      |
-| AWS_BUCKET_NAME       | The name of the storage bucket.                   | academicidfilez |
-
-##### Google
-
-There are two options for Google storage. The first and most simple is to
-provide Application Default Credentials. To do so, set the env var as noted
-under the Vertex AI Gemini configuration above. Make sure the ADC provides
-appropriate access to the storage. If you set the ADC, you only need to set the
-`GOOGLE_BUCKET_NAME` in the list below. If not using ADC, fill in all the env
-vars in this table:
-
-| Env Var             | Description                           | Example                                          |
-| ------------------- | ------------------------------------- | ------------------------------------------------ |
-| GOOGLE_PROJECT_ID   | The project ID containing storage.    | myStorageProject                                 |
-| GOOGLE_CLIENT_EMAIL | The client email with storage access. | storage@myStorageProject.iam.gserviceaccount.com |
-| GOOGLE_PRIVATE_KEY  | The secret account key.               | someString                                       |
-| GOOGLE_BUCKET_NAME  | The name of the storage bucket.       | academicidfilez                                  |
-
-##### s3-compatible
-
-This storage solution has been tested with Cloudflare R2 but theoretically any
-other s3-compatible should work.
-
-| Env Var                         | Description                     | Example                                                          |
-| ------------------------------- | ------------------------------- | ---------------------------------------------------------------- |
-| S3_COMPATIBLE_ENDPOINT          | The endpoint of the service.    | https://897ytvugbhjns897gu.r2.cloudflarestorage.com/your-storage |
-| S3_COMPATIBLE_ACCESS_KEY_ID     | The access key ID.              | someString                                                       |
-| S3_COMPATIBLE_SECRET_ACCESS_KEY | The secret access key.          | someString                                                       |
-| S3_COMPATIBLE_BUCKET_NAME       | The name of the storage bucket. | academicidfilez                                                  |
+**Once you have set these environment variables, make sure the file is saved as
+with the file name: `.env`.**
 
 #### Backups
 
@@ -446,9 +497,8 @@ In the terminal, run the following command:
 docker compose up -d
 ```
 
-After pulling some images, this should start the academicid, Weaviate and Redis
-services. You should be able to open the `Docker Desktop` app and see the
-service running.
+After pulling some images, this should start the services. You should be able to
+open the `Docker Desktop` app and see the service running.
 
 Open a browser and navigate to:
 
@@ -463,10 +513,10 @@ You are all set up. Enjoy!
 ## Signing in with your Microsoft account
 
 Signing in with your Microsoft account allows you to utilise Sapien's academic
-writing assistance without leaving the Word app. It only works for Word
+writing assistance without leaving Microsoft Word. It only works for Word
 documents saved in Onedrive that you can access. It also requires that you are
 either using a personal Microsoft account or that your administrator has
-approved the sapienAI app. If you try to log in with your Microsoft account, you
+approved the SapienAI app. If you try to log in with your Microsoft account, you
 will be presented with a message stating whether or not your account is eligible
 to log into this service. It may also prompt you to request permission from your
 system administrator to access the service.
@@ -474,12 +524,6 @@ system administrator to access the service.
 If you have set this service up behind a reverse proxy or otherwise behind a
 URL, you may struggle to sign in with Microsoft due to a mismatch between the
 redirect URL and how you are running your service.
-
-If you are a system administrator and want to set up sapienAI within your
-Microsoft tenant, you can customise the environmental variables to provide the
-necessary information to both the backend and frontend services. The
-instructions are included in the section
-`Using Microsoft Auth within your Tenant`.
 
 ## Issues
 
@@ -493,16 +537,11 @@ https://github.com/Academic-ID/sapienAI/discussions
 
 ## Roadmap
 
-Our next significant feature is the `Omniscia Library`. The Omnisia Library is
-both a library and an AI-powered research space. It will allow users to upload
-files, such as full-text papers, and have Sapien undertake tasks such as
-literature reviews and data analysis. It will also provide a unified place to
-work on specific research projects, tying together AI research capabilities,
-AI-assisted writing and advanced AI document processing.
+We are currently working on an improved academic writing experience, including
+[Typst](https://typst.app/) support and real-time collaboration on documents.
 
-While this major feature is under construction, bug fixes and small improvements
-will be undertaken. On the immediate radar are expanded cloud support and more
-streamlined Azure OpenAI Service configuration.
+We are also working on improvements to the Research Spaces, including chatting
+over documents and better tagging/coding of documents and segments.
 
 If you have feature requests, please detail these here:
 https://github.com/Academic-ID/sapienAI/discussions
@@ -512,10 +551,7 @@ sign up and utilise Sapien's capabilities without self-hosting the software.
 
 ## Licence information
 
-sapienAI is currently provided under a non-commercial use licence. This is due
-to code dependencies that currently restrict commercial use. We may update this
-licence to a less restrictive licence in future releases as this template code
-is replaced.
+sapienAI is currently provided under a non-commercial use licence.
 
 ## Further customisation
 
@@ -538,10 +574,3 @@ Below is a list of additional environmental variables that can be set.
 | `WEAVIATE_BACKUP_HOURLY_FREQUENCY` | How frequent, in hours, Weaviate DB backups should run; default is 24 hours.                                                                                                                                                                                                                                              |
 | `REDIS_URL`                        | URL for the Redis server. Defaults to `redis://redis:6379`.                                                                                                                                                                                                                                                               |
 | `REDIS_PW`                         | Password for the Redis server.                                                                                                                                                                                                                                                                                            |
-| `COLLECTOR_ENDPOINT`               | The endpoint for an Open Telemetry compatible collector. This can be used to view metrics generated by the app through a stack such as Prometheus + Grafana.                                                                                                                                                              |
-
-## Using Microsoft Auth within your Tenant
-
-Stay tuned. We will be adding these details here soon.
-
-Or, reach out to info@academicid.net for quicker assistance with this.

@@ -1,76 +1,53 @@
 ---
 services:
-  academicid:
-    image: acadmicid/sapien:0.1.4
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
-      - 8.8.8.8
+  acid_backend:
+    image: acadmicid/backend:0.1.5
+    ports:
+      - 3030:3030
+    depends_on:
+      - weaviate
+      - acid_python_svc
+      - acid_file_svc
+      - acid_frontend
+      - redis
+    restart: unless-stopped
+    env_file:
+      - .env
+  acid_frontend:
+    image: acadmicid/front_end:0.1.5
     ports:
       - 3000:3000
-      - 3030:3030
-    environment:
-      # #################
-      # OPENAI ENVIRONMENT VARIABLES
-      # #################
-      # OPENAI_KEY:
-      # OPEN_AI_TEXT_GEN_MODEL:
-      # #################
-      # AZURE OPENAI SERVICE ENVIRONMENT VARIABLES
-      # #################
-      # AZURE_OPENAI_API_VERSION:
-      # #################
-      # AZURE OPENAI TEXT GENERATION & EMBEDDINGS
-      # IF USING A GPT4O MODEL FOR TEXT, PLEASE SET THE `USING_GPT4O` ENVIRONMENT VARIABLE TO true; otherwise delete or leave as is.
-      # #################
-      # AZURE_OPENAI_KEY:
-      # AZURE_OPENAI_RESOURCE:
-      # AZURE_OPENAI_EMBED_DEPLOYMENT:
-      # AZURE_OPENAI_TXT_DEPLOYMENT:
-      # USING_GPT4O:
-      # #################
-      # AZURE OPENAI VISION DEPLOYMENT
-      # #################
-      # AZURE_OPENAI_VISION_RESOURCE:
-      # AZURE_OPENAI_VISION_DEPLOYMENT:
-      # AZURE_OPENAI_VISION_KEY:
-      # #################
-      # AZURE OPENAI IMAGE GENERATION DEPLOYMENT
-      # #################
-      # AZURE_OPENAI_IMG_RESOURCE:
-      # AZURE_OPENAI_IMG_KEY:
-      # AZURE_OPENAI_IMG_DEPLOYMENT:
-      # #################
-      # GEMINI ENVIRONMENT VARIABLES
-      # #################
-      # GEMINI_MODEL:
-      # GEMINI_API_KEY:
-      # #################
-      # CLAUDE ENVIRONMENT VARIABLES
-      # #################
-      # CLAUDE_MODEL:
-      # CLAUDE_API_KEY:
-      # #################
-      # SEMATNIC SCHOLAR
-      # #################
-      # SEMANTIC_SCHOLAR_API_KEY:
-      # #################
-      # PAPERBUZZ
-      # #################
-      # PAPERBUZZ_EMAIL:
+    restart: unless-stopped
+    env_file:
+      - .env
+  acid_python_svc:
+    image: acadmicid/python_services:0.1.5
     depends_on:
       - weaviate
       - redis
-      - academicid_fs
-    volumes:
-      - ./monitoring/logs:/app/logs
-      - ./files:/app/files
+    ports:
+      - 8000:8000
     restart: unless-stopped
-  academicid_fs:
-    image: acadmicid/file_services:0.1.4
+    env_file:
+      - .env
+  acid_file_svc:
+    image: acadmicid/file_services:0.1.5
+    depends_on:
+      - weaviate
+      - redis
     ports:
       - 5500:5500
     restart: unless-stopped
+    env_file:
+      - .env
+  acid_research_spaces:
+    image: acadmicid/research_spaces:0.1.5
+    depends_on:
+      - weaviate
+      - redis
+    restart: unless-stopped
+    env_file:
+      - .env
   weaviate:
     command:
       - --host
@@ -79,7 +56,7 @@ services:
       - '8080'
       - --scheme
       - http
-    image: semitechnologies/weaviate:1.26.3
+    image: semitechnologies/weaviate:1.27.7
     ports:
       - 8080:8080
       - 50051:50051
@@ -91,7 +68,7 @@ services:
       QUERY_DEFAULTS_LIMIT: 25
       QUERY_MAXIMUM_RESULTS: 500001
       AUTHENTICATION_APIKEY_ENABLED: 'true'
-      # It is recommended to leave this key as is, it is the default key for connecting the academicid service to weaviate. If you update this key, you will need to update the `WEAVIATE_API_KEY` environment variable for the academicid service as well.
+      # It is recommended to leave this key as is, it is the default key for connecting the academicid service to weaviate. If you update this key, you will need to uncomment update the `WEAVIATE_API_KEY` environment variable in the .env file
       AUTHENTICATION_APIKEY_ALLOWED_KEYS: '@5D%t$3b49NWx'
       AUTHENTICATION_APIKEY_USERS: 'academicid'
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
@@ -101,10 +78,36 @@ services:
   redis:
     image: redis
     container_name: redis
-    # Similar to weaviate, it is recommended that this password be left as is. If you update this password, you will need to update the `REDIS_PW` environment variable for the academicid service.
+    # Similar to weaviate, it is recommended to leave this password ('596Lf6') as is. If you update this password, you will need to update the `REDIS_PW` environment variable in the .env file.
     command: redis-server --appendonly yes --requirepass 596Lf6
     ports:
       - 6379:6379
     volumes:
       - ./redis/redis_data:/data
     restart: unless-stopped
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - ./s3_data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      interval: 5s
+      timeout: 2s
+      retries: 12
+  # This creates a bucket, 'academicid' in the minio service; If you want to create a bucket using the minio client, you can remove the minio_mc service and log into the client at localhost:9001, using the credentials minioadmin:minioadmin
+  minio_mc:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c " /usr/bin/mc config host add local http://minio:9000
+      minioadmin minioadmin; while ! /usr/bin/mc admin info local; do sleep 1;
+      done; /usr/bin/mc mb --ignore-existing local/academicid; /usr/bin/mc
+      policy set public local/academicid; "
