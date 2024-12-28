@@ -1,7 +1,7 @@
 ---
 services:
   acid_backend:
-    image: acadmicid/backend:0.1.6
+    image: acadmicid/backend:0.1.7
     ports:
       - 3030:3030
     depends_on:
@@ -14,14 +14,14 @@ services:
     env_file:
       - .env
   acid_frontend:
-    image: acadmicid/front_end:0.1.6
+    image: acadmicid/front_end:0.1.7
     ports:
       - 3000:3000
     restart: unless-stopped
     env_file:
       - .env
   acid_python_svc:
-    image: acadmicid/python_services:0.1.6
+    image: acadmicid/python_services:0.1.7
     depends_on:
       - weaviate
       - redis
@@ -31,7 +31,7 @@ services:
     env_file:
       - .env
   acid_file_svc:
-    image: acadmicid/file_services:0.1.6
+    image: acadmicid/file_services:0.1.7
     depends_on:
       - weaviate
       - redis
@@ -41,7 +41,7 @@ services:
     env_file:
       - .env
   acid_research_spaces:
-    image: acadmicid/research_spaces:0.1.6
+    image: acadmicid/research_spaces:0.1.7
     depends_on:
       - weaviate
       - redis
@@ -56,7 +56,7 @@ services:
       - '8080'
       - --scheme
       - http
-    image: semitechnologies/weaviate:1.27.7
+    image: semitechnologies/weaviate:1.28.2
     ports:
       - 8080:8080
       - 50051:50051
@@ -75,6 +75,8 @@ services:
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
       DEFAULT_VECTORIZER_MODULE: 'none'
       CLUSTER_HOSTNAME: 'node1'
+      # ASYNC_INDEXING is set to true to enable asynchronous indexing. This is required and should not be changed for new installs. This helps reduce memory usage by allowing the creation of a dynamic index for each class in the schema. See more information here: https://weaviate.io/developers/weaviate/concepts/vector-index#dynamic-index
+      ASYNC_INDEXING: 'true'
   redis:
     image: redis
     container_name: redis
