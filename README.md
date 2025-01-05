@@ -104,6 +104,9 @@ Docker Compose file.
 
 ### Install
 
+> [!TIP]
+> Never installed a Docker container before? Read on and then follow along with these instructions here: [https://youtu.be/77eGeTD5ufU](https://youtu.be/77eGeTD5ufU)
+
 You can clone this repository or download it as a zip file (and then unzip once
 downloaded).
 
@@ -133,6 +136,8 @@ these only need to be set if you want to set a value other than the default.
 The quickest way to get started is to set the `OPENAI_KEY` environmental value.
 This is your
 [OpenAI API key](https://platform.openai.com/docs/quickstart/account-setup).
+
+You can get your API key here by signing up (or logging in) here: [https://platform.openai.com/settings/organization/api-keys](https://platform.openai.com/settings/organization/api-keys)
 
 ---
 
