@@ -40,7 +40,12 @@ in other options.
   Sapien also has cross-chat memory.
 - **Semantic search:** All uploaded documents are stored and semantically
   indexed, allowing you to search for relevant documents and chunks of text
-  within documents.
+  within documents. **Bonus:** If you have connected your Zotero account, you can semantically search over those items as well!
+
+<div style="display: flex">
+  <img width="49%" alt="Screenshot 2025-06-07 at 3 20 58 pm" src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" />
+  <img width="49%" alt="Screenshot 2025-06-07 at 3 21 16 pm" src="https://github.com/user-attachments/assets/cc660436-c914-4245-b415-873f61f22d3d" />
+</div>
 
 ### 2. Research Spaces
 
@@ -65,9 +70,11 @@ stored within.
 - **Integrated Document Management:** Work directly within the platform, from
   initial idea to final draft, with tools designed for academic rigour.
 
-### 3. Zotero Semantic Search
-
-Connect your Zotero account and semantically search over your items!
+<div style="display: flex;">
+<img width="33%" alt="Screenshot 2025-06-07 at 3 05 06 pm" src="https://github.com/user-attachments/assets/30dd1a6c-7e78-4594-91c7-ed5ea1a5b59b" />
+<img width="33%" alt="Screenshot 2025-06-07 at 3 07 57 pm" src="https://github.com/user-attachments/assets/1878e56e-737b-4a93-a8e3-cb402bb90e60" />
+<img width="33%" alt="Screenshot 2025-06-07 at 3 09 22 pm" src="https://github.com/user-attachments/assets/1a89823f-d7f9-4a99-93d0-5aade121f2a7" />
+</div>
 
 ## Beta notice!
 
