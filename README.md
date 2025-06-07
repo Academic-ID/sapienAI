@@ -206,9 +206,6 @@ This does not need to updated if using the provided docker compose file.
 | `WEAVIATE_BACKUP_RESTORE_ID`       | ID for Weaviate backup/restore operations.          | string | `null`          |
 | `WEAVIATE_BACKUP_HOURLY_FREQUENCY` | How often (in hours) to perform Weaviate backups.   | number | `24`            |
 
-_Note: `weaviateHost` in the config is constructed as
-`${WEAVIATE_HOST}:${WEAVIATE_PORT}`._
-
 ### Redis
 
 In-memory data store.
@@ -227,9 +224,7 @@ This does not need to updated if using the provided docker compose file.
 
 Configure access to various Large Language Models (LLMs) and AI services. **At
 least one AI model provider (OpenAI, Azure OpenAI, Claude, or Gemini) must be
-configured for the application to function correctly.** The `MODELS` array in
-the application configuration is populated based on which API keys/credentials
-you provide.
+configured for the application to function correctly.**
 
 ### General AI Settings
 
@@ -467,9 +462,9 @@ variables in this table:
   Ensure they are stored securely and not hardcoded or committed to version
   control.
 - **Model Availability:** The application dynamically determines available AI
-  models (`MODELS` config property) based on the presence of their respective
-  API keys or configurations. If a required key/config is missing for a model,
-  that model will not be available for use.
+  models based on the presence of their respective API keys or configurations.
+  If a required key/config is missing for a model, that model will not be
+  available for use.
 - **Validation:** The application performs a basic validation check on startup.
   If critical environment variables are missing or improperly set (e.g., if no
   AI models can be configured), the application may fail to start. Check the
