@@ -44,7 +44,7 @@ in other options.
 
 <div style="display: flex">
   <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" />
-  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/cc660436-c914-4245-b415-873f61f22d3d" />
+  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/d4724d22-b533-4b91-b271-0470b254e6ba" />
 </div>
 
 ### 2. Research Spaces
