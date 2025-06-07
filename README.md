@@ -39,8 +39,7 @@ in other options.
   instruction ensures Sapien is flexible and highly tailored to your needs.
   Sapien also has cross-chat memory.
 - **Semantic search:** All uploaded documents are stored and semantically
-  indexed, allowing you to search for relevant documents and chunks of text
-  within documents. **Bonus:** If you have connected your Zotero account, you can semantically search over those items as well!
+  indexed, allowing you to search for content using natural language. **Bonus:** If you have connected your Zotero account, you can semantically search items stored there as well!
 
 <div style="display: flex">
   <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" />
@@ -54,8 +53,7 @@ dedicated workspaces for you to upload your project documents and files. An
 integrated editor allows you to write and edit documents, and the chat interface
 allows you to ask questions about your documents, summarise them, and more. All
 uploaded documents are summarised based on the instructions you provide and are
-semantically indexed, allowing you to search for relevant documents and content
-stored within.
+semantically indexed, allowing you to easily find information.
 
 - **Streamline your writing:** Our integrated editor lets you write your next
   research paper with Sapien's assistance. Keep it simple and write using
@@ -64,11 +62,9 @@ stored within.
 - **Organise your research:** Keep all your notes, sources, and drafts in one
   intelligent, interconnected space. All uploaded documents can be semantically
   searched, and AI-powered literature reviews can be exported in Word and Excel
-  format.
-- **Enhance productivity:** Leverage AI to help with tasks like mass document
-  summarisation, literature review assistance, and idea generation.
-- **Integrated Document Management:** Work directly within the platform, from
-  initial idea to final draft, with tools designed for academic rigour.
+  format. 
+- **Enhance productivity:** Work directly within the platform, from
+  initial idea to final draft.
 
 <div style="display: flex;">
 <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/30dd1a6c-7e78-4594-91c7-ed5ea1a5b59b" />
@@ -96,9 +92,9 @@ come across [here](https://github.com/Academic-ID/sapienAI/issues).
     - [Redis](#redis)
 4.  [AI Model Configuration](#ai-model-configuration)
     - [General AI Settings](#general-ai-settings)
-    - [OpenAI (Direct API)](#openai-direct-api)
+    - [OpenAI](#openai)
     - [Azure OpenAI Service](#azure-openai-service)
-    - [Anthropic Claude](#anthropic-claude)
+    - [Anthropic Claude (Direct and AWS)](#anthropic-claude-direct-and-aws)
     - [Google Gemini & Vertex AI](#google-gemini--vertex-ai)
     - [Model-Specific Defaults (Tokens)](#model-specific-defaults-tokens)
 5.  [File Storage Configuration](#file-storage-configuration)
@@ -106,11 +102,12 @@ come across [here](https://github.com/Academic-ID/sapienAI/issues).
     - [Azure Blob Storage](#azure-blob-storage)
     - [AWS S3](#aws-s3)
     - [Google Cloud Storage (GCS)](#google-cloud-storage-gcs)
-    - [S3-Compatible Storage (e.g., MinIO)](#s3-compatible-storage-eg-minio)
+    - [S3-Compatible Storage (e.g., MinIO or Cloudflare R2)](#s3-compatible-storage-eg-minio-or-cloudflare-r2)
 6.  [External Service Integrations](#external-service-integrations)
     - [PaperBuzz](#paperbuzz)
     - [Semantic Scholar](#semantic-scholar)
 7.  [Important Notes](#important-notes)
+8.  [Experimental Features](#experimental-features)
 
 ---
 
@@ -126,15 +123,10 @@ installs Docker Compose. Instructions to download `Docker Desktop` can be found
 
 ### Install
 
-> [!TIP] Never installed a Docker container before? Read on and then follow
-> along with these instructions here:
-> [https://youtu.be/77eGeTD5ufU](https://youtu.be/77eGeTD5ufU)
-
 You can clone this repository or download it as a zip file (and then unzip once
 downloaded).
 
-To continue with the installation, you can open the folder in an IDE or a rich
-text editor such as
+To continue with the installation, you can open the folder in an IDE or a text editor such as
 [Visual Studio Code](https://code.visualstudio.com/download), or you can open
 the docker-compose.yml file with a text editor such as TextEdit on Mac
 or Notepad on Windows.
@@ -158,7 +150,7 @@ OPENAI_KEY=your_openai_api_key_here
 
 ### OpenAI Key
 
-The quickest way to get started is to set the `OPENAI_KEY` environmental value.
+The quickest way to get started is to set the `OPENAI_KEY` environmental variable.
 This is your
 [OpenAI API key](https://platform.openai.com/docs/quickstart/account-setup).
 
@@ -178,11 +170,11 @@ docker compose up -d
 
 ## General Application Settings
 
-These variables control the core behavior and environment of the application.
+These variables control the core behaviour and environment of the application.
 
-This does not need to updated if using the provided docker compose file. If you
-change the ports here, make sure you update the relevant ports in the docker
-compose files.
+This does not need to be updated if using the provided Docker Compose file. If you
+change the ports here, make sure you update the relevant ports in the Docker
+Compose files.
 
 | Environment Variable  | Description                                                  | Type                                     | Default Value           |
 | :-------------------- | :----------------------------------------------------------- | :--------------------------------------- | :---------------------- |
@@ -192,7 +184,7 @@ compose files.
 | `BACKEND_URL`         | The base URL of this backend application.                    | string (URL)                             | `http://localhost:3030` |
 | `TIMEZONE`            | The timezone the application will operate in.                | string (e.g., `UTC`, `America/New_York`) | `UTC`                   |
 | `CUSTOM_PROMPT`       | A custom prompt to be used in conversation generation.       | string                                   | `null`                  |
-| `ADVANCED_EXTRACTION` | Extract text from files using the GPT4o vision capabilities. | `true` or `false`                        | `false`                 |
+| `ADVANCED_EXTRACTION` | Extract text from files using the GPT4o vision capabilities (expensive but highest quality text extraction). | `true` or `false`                        | `false`                 |
 | `MAX_WORKERS`         | Number of files that can be processed in parallel.           | number                                   | `3`                     |
 
 ---
@@ -203,7 +195,7 @@ compose files.
 
 Vector database for semantic search and RAG.
 
-This does not need to updated if using the provided docker compose file.
+This does not need to be updated if using the provided Docker Compose file.
 
 | Environment Variable               | Description                                         | Type   | Default Value   |
 | :--------------------------------- | :-------------------------------------------------- | :----- | :-------------- |
@@ -221,7 +213,7 @@ This does not need to updated if using the provided docker compose file.
 
 In-memory data store.
 
-This does not need to updated if using the provided docker compose file.
+This does not need to be updated if using the provided Docker Compose file.
 
 | Environment Variable | Description                                              | Type                     | Default Value        |
 | :------------------- | :------------------------------------------------------- | :----------------------- | :------------------- |
@@ -272,14 +264,14 @@ absolutely required):
 2. A resource for a vision deployment endpoint. This must contain a vision
    capable GPT4-family model.
 3. A resource for a Dall.e 3 deployment.
-4. A resource for an o1 & o1-mini deployment.
-5. A resource for a realtime chat.
+4. A resource for reasoning models (e.g. o1 & o1-mini).
+5. A resource for a real-time chat.
 
 These resources can overlap. If you have a resource in a region that has the
-availability for all features, you can set the env var for each feature to the
-same resource (but you still have to set each env var).
+availability for all features, you can set the env variables for each feature to the
+same resource (but you still have to set each env variable).
 
-If you do not set the Azure vision resource, and no other vision capable models
+If you do not set the Azure vision resource, and no other vision-capable models
 are set, you will not be able to use vision capabilities in the chat.
 
 This is somewhat unwieldy, but until Azure provides all models in all regions,
@@ -287,7 +279,7 @@ this is the best way to maximise what can be achieved using Azure.
 
 | Environment Variable                     | Description                                                                                      | Type    | Default Value        |
 | :--------------------------------------- | :----------------------------------------------------------------------------------------------- | :------ | :------------------- |
-| `USING_GPT4O`                            | Set to `false` if not using a vision capable GPT-4o models on Azure leave the default otherwise. | boolean | `true`               |
+| `USING_GPT4O`                            | Set to `false` if not using a vision-capable GPT-4o model on Azure, leave the default otherwise. | boolean | `true`               |
 | `AZURE_OPENAI_API_VERSION`               | API version for Azure OpenAI services.                                                           | string  | `2024-12-01-preview` |
 | **Text & Embedding Models (General)**    |                                                                                                  |         |                      |
 | `AZURE_OPENAI_KEY`                       | API key for general Azure OpenAI text/embedding services.                                        | string  | `null`               |
@@ -312,9 +304,9 @@ this is the best way to maximise what can be achieved using Azure.
 | `AZURE_OPENAI_REASONING_DEPLOYMENT`      | Deployment name for the large Azure OpenAI reasoning model.                                      | string  | `null`               |
 | `AZURE_OPENAI_REASONING_MINI_DEPLOYMENT` | Deployment name for the mini Azure OpenAI reasoning model.                                       | string  | `null`               |
 
-### Anthropic Claude
+### Anthropic Claude (Direct and AWS)
 
-Configure access to Anthropic's Claude models.
+Configure access to Anthropic's Claude models. Only one option needs to be set to use Claude models.
 
 | Environment Variable     | Description                                                                       | Type   | Default Value |
 | :----------------------- | :-------------------------------------------------------------------------------- | :----- | :------------ |
@@ -329,7 +321,7 @@ Configure access to Anthropic's Claude models.
 
 ### Google Gemini & Vertex AI
 
-Configure access to Google's Gemini models, potentially via Vertex AI.
+Configure access to Google's Gemini models. Only one option needs to be set to use Gemini models.
 
 | Environment Variable             | Description                                                         | Type   | Default Value |
 | :------------------------------- | :------------------------------------------------------------------ | :----- | :------------ |
@@ -342,12 +334,12 @@ Configure access to Google's Gemini models, potentially via Vertex AI.
 | `VERTEX_LOCATION`                | Location/Region for your Vertex AI resources (e.g., `us-central1`). | string | `null`        |
 | `GOOGLE_APPLICATION_CREDENTIALS` | See below                                                           | string | `null`        |
 
-To set the GOOGLE_APPLICATION_CREDENTIALS with Docker and Docker Compose, you'll
+To set the `GOOGLE_APPLICATION_CREDENTIALS` with Docker and Docker Compose, you'll
 need to use a volume mount.
 
 ```yaml
 volumes:
-  - /pathToCredentialsOnHost/credentials.json:/path/to/credentials/in/container/credentials.json:ro
+  - /pathToCredentialsOnHost/credentials.json:/pathToCredentialsInContainer/credentials.json:ro
 ```
 
 For example, if the json credential file is in the root directory and is called
@@ -357,7 +349,7 @@ For example, if the json credential file is in the root directory and is called
 GOOGLE_APPLICATION_CREDENTIALS='/app/credentials.json'
 ```
 
-The Docker Compose file, under the backend service, would have the following:
+The Docker Compose file, under the **backend** service, would have the following:
 
 ```yml
 env_file:
@@ -392,9 +384,9 @@ For example GPT4.1 can support 1 million tokens so you may want to update the
 
 ## File Storage Configuration
 
-Define where user files and application data are stored.
+Define where uploaded files and application data are stored.
 
-The defaults here will work if using the provided docker compose file.
+The defaults here will work with no adjustments required if using the provided Docker Compose file.
 
 ### General Storage Settings
 
@@ -404,7 +396,7 @@ The defaults here will work if using the provided docker compose file.
 
 ### Azure Blob Storage
 
-You can provide a connection string or account name + key.
+You can provide a connection string _OR_ an account name + key.
 
 | Environment Variable              | Description                               | Type   | Default Value |
 | :-------------------------------- | :---------------------------------------- | :----- | :------------ |
@@ -424,9 +416,9 @@ You can provide a connection string or account name + key.
 
 ### Google Cloud Storage (GCS)
 
-There are two options for Google storage. The first and most simple is to
+There are two options for Google storage. The first and simplest is to
 provide Application Default Credentials. To do so, set the env var as noted
-under the Vertex AI Gemini configuration. Make sure the ADC provides appropriate
+under the [Google Gemini & Vertex AI](#google-gemini--vertex-ai) configuration. Make sure the ADC provides appropriate
 access to the storage. If you set the ADC, you only need to set the
 `GOOGLE_BUCKET_NAME` in the list below. If not using ADC, fill in all the
 variables in this table:
@@ -447,7 +439,7 @@ variables in this table:
 | `S3_COMPATIBLE_SECRET_ACCESS_KEY` | Secret Access Key for the S3-compatible service.                                           | string  | `minioadmin`            |
 | `S3_COMPATIBLE_BUCKET_NAME`       | Bucket name in the S3-compatible service.                                                  | string  | `academicid`            |
 | `S3_COMPATIBLE_FORCE_PATH_STYLE`  | Whether to force path-style addressing (`true` or `false`). Defaults to `true` if not set. | boolean | `true`                  |
-| `S3_COMPATIBLE_ENDPOINT_SERVICE`  | Service name, typically relevant for specific providers (e.g., `minio`).                   | string  | `minio`                 |
+| `S3_COMPATIBLE_ENDPOINT_SERVICE`  | Service name as defined in the Docker Compose file if storage is within the same Compose project as the AcademicID services (e.g., `minio`) – this is required for communication between Docker Containers, see the example.env file for more information.                   | string  | `minio`                 |
 
 ---
 
@@ -481,8 +473,8 @@ variables in this table:
   AI models can be configured), the application may fail to start. Check the
   Docker logs for details in such cases.
 - **Default Values:** Many variables have default values to maximise
-  performance, for example large conversation token counts. This can increase
-  costs so be wary of API costs.
+  performance, such as large default conversation token allowances. This can increase
+  costs, so be sure to keep an eye on API spend.
 
 ## Experimental Features
 
