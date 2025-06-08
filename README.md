@@ -79,7 +79,7 @@ semantically indexed, allowing you to easily find information.
 </div>
 
 > [!IMPORTANT]
-> The Editor feature is no longer being maintained. It still works, but the functionality is being moved into Research Spaces.
+> The Editor feature (a separate feature from the Research Spaces described above) is no longer being maintained. It still works, but the functionality is being moved into Research Spaces.
 > It is recommended that any new writing be started in the Research Space editor.
 
 ## Beta notice!
