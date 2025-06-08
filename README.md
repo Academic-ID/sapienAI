@@ -39,7 +39,9 @@ in other options.
   instruction ensures Sapien is flexible and highly tailored to your needs.
   Sapien also has cross-chat memory.
 - **Semantic search:** All uploaded documents are stored and semantically
-  indexed, allowing you to search for content using natural language. **Bonus:** If you have connected your Zotero account, you can semantically search items stored there as well!
+  indexed, allowing you to search for content using natural language. **Bonus:**
+  If you have connected your Zotero account, you can semantically search items
+  stored there as well!
 
 <div style="display: flex">
   <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" />
@@ -62,9 +64,9 @@ semantically indexed, allowing you to easily find information.
 - **Organise your research:** Keep all your notes, sources, and drafts in one
   intelligent, interconnected space. All uploaded documents can be semantically
   searched, and AI-powered literature reviews can be exported in Word and Excel
-  format. 
-- **Enhance productivity:** Work directly within the platform, from
-  initial idea to final draft.
+  format.
+- **Enhance productivity:** Work directly within the platform, from initial idea
+  to final draft.
 
 <div style="display: flex;">
 <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/30dd1a6c-7e78-4594-91c7-ed5ea1a5b59b" />
@@ -126,10 +128,10 @@ installs Docker Compose. Instructions to download `Docker Desktop` can be found
 You can clone this repository or download it as a zip file (and then unzip once
 downloaded).
 
-To continue with the installation, you can open the folder in an IDE or a text editor such as
-[Visual Studio Code](https://code.visualstudio.com/download), or you can open
-the docker-compose.yml file with a text editor such as TextEdit on Mac
-or Notepad on Windows.
+To continue with the installation, you can open the folder in an IDE or a text
+editor such as [Visual Studio Code](https://code.visualstudio.com/download), or
+you can open the docker-compose.yml file with a text editor such as TextEdit on
+Mac or Notepad on Windows.
 
 ### Setting the environmental variables
 
@@ -150,8 +152,8 @@ OPENAI_KEY=your_openai_api_key_here
 
 ### OpenAI Key
 
-The quickest way to get started is to set the `OPENAI_KEY` environmental variable.
-This is your
+The quickest way to get started is to set the `OPENAI_KEY` environmental
+variable. This is your
 [OpenAI API key](https://platform.openai.com/docs/quickstart/account-setup).
 
 You can get your API key here by signing up (or logging in) here:
@@ -172,20 +174,22 @@ docker compose up -d
 
 These variables control the core behaviour and environment of the application.
 
-This does not need to be updated if using the provided Docker Compose file. If you
-change the ports here, make sure you update the relevant ports in the Docker
+This does not need to be updated if using the provided Docker Compose file. If
+you change the ports here, make sure you update the relevant ports in the Docker
 Compose files.
 
-| Environment Variable  | Description                                                  | Type                                     | Default Value           |
-| :-------------------- | :----------------------------------------------------------- | :--------------------------------------- | :---------------------- |
-| `BACKEND_PORT`        | Port the main backend service will listen on.                | number                                   | `3030`                  |
-| `METRICS_PORT`        | Port for Prometheus metrics.                                 | number                                   | `9464`                  |
-| `FRONTEND_URL`        | The base URL of the frontend application.                    | string (URL)                             | `http://localhost:3000` |
-| `BACKEND_URL`         | The base URL of this backend application.                    | string (URL)                             | `http://localhost:3030` |
-| `TIMEZONE`            | The timezone the application will operate in.                | string (e.g., `UTC`, `America/New_York`) | `UTC`                   |
-| `CUSTOM_PROMPT`       | A custom prompt to be used in conversation generation.       | string                                   | `null`                  |
-| `ADVANCED_EXTRACTION` | Extract text from files using the GPT4o vision capabilities (expensive but highest quality text extraction). | `true` or `false`                        | `false`                 |
-| `MAX_WORKERS`         | Number of files that can be processed in parallel.           | number                                   | `3`                     |
+| Environment Variable   | Description                                                                                                                   | Type                                     | Default Value               |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------- | :-------------------------- |
+| `BACKEND_PORT`         | Port the main backend service will listen on.                                                                                 | number                                   | `3030`                      |
+| `METRICS_PORT`         | Port for Prometheus metrics.                                                                                                  | number                                   | `9464`                      |
+| `FRONTEND_URL`         | The base URL of the frontend application.                                                                                     | string (URL)                             | `http://localhost:3000`     |
+| `BACKEND_URL`          | The base URL of this backend application.                                                                                     | string (URL)                             | `http://localhost:3030`     |
+| `NUXT_PUBLIC_API_BASE` | The base API endpoint for the frontend to communicate with the backend. See the comments in example.env for more information. | string (URL)                             | `http://localhost:3030/api` |
+| `NUXT_PUBLIC_WS_BASE`  | The base ws endpoint for the frontend to communicate with the backend. See the comments in example.env for more information.  | string (URL)                             | `ws://localhost:3030`       |
+| `TIMEZONE`             | The timezone the application will operate in.                                                                                 | string (e.g., `UTC`, `America/New_York`) | `UTC`                       |
+| `CUSTOM_PROMPT`        | A custom prompt to be used in conversation generation.                                                                        | string                                   | `null`                      |
+| `ADVANCED_EXTRACTION`  | Extract text from files using the GPT4o vision capabilities (expensive but highest quality text extraction).                  | `true` or `false`                        | `false`                     |
+| `MAX_WORKERS`          | Number of files that can be processed in parallel.                                                                            | number                                   | `3`                         |
 
 ---
 
@@ -268,8 +272,8 @@ absolutely required):
 5. A resource for a real-time chat.
 
 These resources can overlap. If you have a resource in a region that has the
-availability for all features, you can set the env variables for each feature to the
-same resource (but you still have to set each env variable).
+availability for all features, you can set the env variables for each feature to
+the same resource (but you still have to set each env variable).
 
 If you do not set the Azure vision resource, and no other vision-capable models
 are set, you will not be able to use vision capabilities in the chat.
@@ -306,7 +310,8 @@ this is the best way to maximise what can be achieved using Azure.
 
 ### Anthropic Claude (Direct and AWS)
 
-Configure access to Anthropic's Claude models. Only one option needs to be set to use Claude models.
+Configure access to Anthropic's Claude models. Only one option needs to be set
+to use Claude models.
 
 | Environment Variable     | Description                                                                       | Type   | Default Value |
 | :----------------------- | :-------------------------------------------------------------------------------- | :----- | :------------ |
@@ -321,7 +326,8 @@ Configure access to Anthropic's Claude models. Only one option needs to be set t
 
 ### Google Gemini & Vertex AI
 
-Configure access to Google's Gemini models. Only one option needs to be set to use Gemini models.
+Configure access to Google's Gemini models. Only one option needs to be set to
+use Gemini models.
 
 | Environment Variable             | Description                                                         | Type   | Default Value |
 | :------------------------------- | :------------------------------------------------------------------ | :----- | :------------ |
@@ -334,8 +340,8 @@ Configure access to Google's Gemini models. Only one option needs to be set to u
 | `VERTEX_LOCATION`                | Location/Region for your Vertex AI resources (e.g., `us-central1`). | string | `null`        |
 | `GOOGLE_APPLICATION_CREDENTIALS` | See below                                                           | string | `null`        |
 
-To set the `GOOGLE_APPLICATION_CREDENTIALS` with Docker and Docker Compose, you'll
-need to use a volume mount.
+To set the `GOOGLE_APPLICATION_CREDENTIALS` with Docker and Docker Compose,
+you'll need to use a volume mount.
 
 ```yaml
 volumes:
@@ -349,7 +355,8 @@ For example, if the json credential file is in the root directory and is called
 GOOGLE_APPLICATION_CREDENTIALS='/app/credentials.json'
 ```
 
-The Docker Compose file, under the **backend** service, would have the following:
+The Docker Compose file, under the **backend** service, would have the
+following:
 
 ```yml
 env_file:
@@ -386,7 +393,8 @@ For example GPT4.1 can support 1 million tokens so you may want to update the
 
 Define where uploaded files and application data are stored.
 
-The defaults here will work with no adjustments required if using the provided Docker Compose file.
+The defaults here will work with no adjustments required if using the provided
+Docker Compose file.
 
 ### General Storage Settings
 
@@ -416,12 +424,12 @@ You can provide a connection string _OR_ an account name + key.
 
 ### Google Cloud Storage (GCS)
 
-There are two options for Google storage. The first and simplest is to
-provide Application Default Credentials. To do so, set the env var as noted
-under the [Google Gemini & Vertex AI](#google-gemini--vertex-ai) configuration. Make sure the ADC provides appropriate
-access to the storage. If you set the ADC, you only need to set the
-`GOOGLE_BUCKET_NAME` in the list below. If not using ADC, fill in all the
-variables in this table:
+There are two options for Google storage. The first and simplest is to provide
+Application Default Credentials. To do so, set the env var as noted under the
+[Google Gemini & Vertex AI](#google-gemini--vertex-ai) configuration. Make sure
+the ADC provides appropriate access to the storage. If you set the ADC, you only
+need to set the `GOOGLE_BUCKET_NAME` in the list below. If not using ADC, fill
+in all the variables in this table:
 
 | Environment Variable  | Description                                 | Type   | Default Value |
 | :-------------------- | :------------------------------------------ | :----- | :------------ |
@@ -432,14 +440,14 @@ variables in this table:
 
 ### S3-Compatible Storage (e.g., MinIO or Cloudflare R2)
 
-| Environment Variable              | Description                                                                                | Type    | Default Value           |
-| :-------------------------------- | :----------------------------------------------------------------------------------------- | :------ | :---------------------- |
-| `S3_COMPATIBLE_ENDPOINT`          | Endpoint URL for the S3-compatible service (e.g., MinIO).                                  | string  | `http://localhost:9000` |
-| `S3_COMPATIBLE_ACCESS_KEY_ID`     | Access Key ID for the S3-compatible service.                                               | string  | `minioadmin`            |
-| `S3_COMPATIBLE_SECRET_ACCESS_KEY` | Secret Access Key for the S3-compatible service.                                           | string  | `minioadmin`            |
-| `S3_COMPATIBLE_BUCKET_NAME`       | Bucket name in the S3-compatible service.                                                  | string  | `academicid`            |
-| `S3_COMPATIBLE_FORCE_PATH_STYLE`  | Whether to force path-style addressing (`true` or `false`). Defaults to `true` if not set. | boolean | `true`                  |
-| `S3_COMPATIBLE_ENDPOINT_SERVICE`  | Service name as defined in the Docker Compose file if storage is within the same Compose project as the AcademicID services (e.g., `minio`) – this is required for communication between Docker Containers, see the example.env file for more information.                   | string  | `minio`                 |
+| Environment Variable              | Description                                                                                                                                                                                                                                                | Type    | Default Value           |
+| :-------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------ | :---------------------- |
+| `S3_COMPATIBLE_ENDPOINT`          | Endpoint URL for the S3-compatible service (e.g., MinIO).                                                                                                                                                                                                  | string  | `http://localhost:9000` |
+| `S3_COMPATIBLE_ACCESS_KEY_ID`     | Access Key ID for the S3-compatible service.                                                                                                                                                                                                               | string  | `minioadmin`            |
+| `S3_COMPATIBLE_SECRET_ACCESS_KEY` | Secret Access Key for the S3-compatible service.                                                                                                                                                                                                           | string  | `minioadmin`            |
+| `S3_COMPATIBLE_BUCKET_NAME`       | Bucket name in the S3-compatible service.                                                                                                                                                                                                                  | string  | `academicid`            |
+| `S3_COMPATIBLE_FORCE_PATH_STYLE`  | Whether to force path-style addressing (`true` or `false`). Defaults to `true` if not set.                                                                                                                                                                 | boolean | `true`                  |
+| `S3_COMPATIBLE_ENDPOINT_SERVICE`  | Service name as defined in the Docker Compose file if storage is within the same Compose project as the AcademicID services (e.g., `minio`) – this is required for communication between Docker Containers, see the example.env file for more information. | string  | `minio`                 |
 
 ---
 
@@ -473,8 +481,8 @@ variables in this table:
   AI models can be configured), the application may fail to start. Check the
   Docker logs for details in such cases.
 - **Default Values:** Many variables have default values to maximise
-  performance, such as large default conversation token allowances. This can increase
-  costs, so be sure to keep an eye on API spend.
+  performance, such as large default conversation token allowances. This can
+  increase costs, so be sure to keep an eye on API spend.
 
 ## Experimental Features
 
