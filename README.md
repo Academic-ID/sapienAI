@@ -78,6 +78,10 @@ semantically indexed, allowing you to easily find information.
 <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/1a89823f-d7f9-4a99-93d0-5aade121f2a7" />
 </div>
 
+> [!IMPORTANT]
+> The Editor feature is no longer being maintained. It still works, but the functionality is being moved into Research Spaces.
+> It is recommended that any new writing be started in the Research Space editor.
+
 ## Beta notice!
 
 SapienAI is still under active development. Testing has been limited and only on
