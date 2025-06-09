@@ -93,27 +93,28 @@ come across [here](https://github.com/Academic-ID/sapienAI/issues).
 
 1.  [Quick Start](#quick-start)
 2.  [General Application Settings](#general-application-settings)
-3.  [Database Configuration](#database-configuration)
+    - [Serving Behind a Unique URL (e.g. a Reverse Proxy)](#serving-behind-a-unique-url-eg-a-reverse-proxy)
+4.  [Database Configuration](#database-configuration)
     - [Weaviate](#weaviate)
     - [Redis](#redis)
-4.  [AI Model Configuration](#ai-model-configuration)
+5.  [AI Model Configuration](#ai-model-configuration)
     - [General AI Settings](#general-ai-settings)
     - [OpenAI](#openai)
     - [Azure OpenAI Service](#azure-openai-service)
     - [Anthropic Claude (Direct and AWS)](#anthropic-claude-direct-and-aws)
     - [Google Gemini & Vertex AI](#google-gemini--vertex-ai)
     - [Model-Specific Defaults (Tokens)](#model-specific-defaults-tokens)
-5.  [File Storage Configuration](#file-storage-configuration)
+6.  [File Storage Configuration](#file-storage-configuration)
     - [General Storage Settings](#general-storage-settings)
     - [Azure Blob Storage](#azure-blob-storage)
     - [AWS S3](#aws-s3)
     - [Google Cloud Storage (GCS)](#google-cloud-storage-gcs)
     - [S3-Compatible Storage (e.g., MinIO or Cloudflare R2)](#s3-compatible-storage-eg-minio-or-cloudflare-r2)
-6.  [External Service Integrations](#external-service-integrations)
+7.  [External Service Integrations](#external-service-integrations)
     - [PaperBuzz](#paperbuzz)
     - [Semantic Scholar](#semantic-scholar)
-7.  [Important Notes](#important-notes)
-8.  [Experimental Features](#experimental-features)
+8.  [Important Notes](#important-notes)
+9.  [Experimental Features](#experimental-features)
 
 ---
 
@@ -194,6 +195,10 @@ Compose files.
 | `CUSTOM_PROMPT`        | A custom prompt to be used in conversation generation.                                                                        | string                                   | `null`                      |
 | `ADVANCED_EXTRACTION`  | Extract text from files using the GPT4o vision capabilities (expensive but highest quality text extraction).                  | `true` or `false`                        | `false`                     |
 | `MAX_WORKERS`          | Number of files that can be processed in parallel.                                                                            | number                                   | `3`                         |
+
+### Serving Behind a Unique URL (e.g. a Reverse Proxy)
+
+To host the service behind a reverse proxy or otherwise through a custom domain name, you will need to update the following variables: `FRONTEND_URL`, `BACKEND_URL`, `NUXT_PUBLIC_API_BASE`, and `NUXT_PUBLIC_WS_BASE`. Unfortunately, Microsoft login will not work when served on a unique URL, as the redirect address will not match what is registered in the EntraID portal. Make sure other components, such as storage, are also defined correctly with the correct URLs.
 
 ---
 
@@ -468,6 +473,24 @@ in all the variables in this table:
 | Environment Variable       | Description                   | Type   | Default Value |
 | :------------------------- | :---------------------------- | :----- | :------------ |
 | `SEMANTIC_SCHOLAR_API_KEY` | API key for Semantic Scholar. | string | `null`        |
+
+---
+
+## Connecting Your Zotero Account
+
+To connect your Zotero account, follow these steps:
+
+<div style="display: flex">
+  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/d953f4cc-ebfc-40bc-9b10-608aea402cf0" />
+  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/e71731f6-3a85-470f-a90d-2e1c9e875805" />
+</div>
+
+When logged into Zotero's web interface, the UserID and link to create an API key can be found [here](https://www.zotero.org/settings/security#applications).
+
+<div style="display: flex; align-items: center">
+  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/72e95732-9dac-4b69-b5a5-b34c902dfd07" />
+  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/b48f33ba-11f9-446d-82ad-9c5942ac3aec" />
+</div>
 
 ---
 
