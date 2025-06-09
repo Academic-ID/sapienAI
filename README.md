@@ -113,8 +113,9 @@ come across [here](https://github.com/Academic-ID/sapienAI/issues).
 7.  [External Service Integrations](#external-service-integrations)
     - [PaperBuzz](#paperbuzz)
     - [Semantic Scholar](#semantic-scholar)
-8.  [Important Notes](#important-notes)
-9.  [Experimental Features](#experimental-features)
+8. [Connecting Your Zotero Account](#connecting-your-zotero-account)
+9.  [Important Notes](#important-notes)
+10.  [Experimental Features](#experimental-features)
 
 ---
 
