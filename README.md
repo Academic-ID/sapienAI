@@ -201,6 +201,8 @@ Compose files.
 
 To host the service behind a reverse proxy or otherwise through a custom domain name, you will need to update the following variables: `FRONTEND_URL`, `BACKEND_URL`, `NUXT_PUBLIC_API_BASE`, and `NUXT_PUBLIC_WS_BASE`. Unfortunately, Microsoft login will not work when served on a unique URL, as the redirect address will not match what is registered in the EntraID portal. Make sure other components, such as storage, are also defined correctly with the correct URLs.
 
+The app currently will not work if self-signed certificates are used. If using a reverse proxy, you will need to either serve the app using HTTP and tell the browser to treat the URL as secure (e.g. by adding it to the `Insecure origins treated as secure` option at chrome://flags/) OR, and preferably, make sure there is a signed certificate for the app (frontend and backend) and the storage service if also hosting this.
+
 ---
 
 ## Database Configuration
