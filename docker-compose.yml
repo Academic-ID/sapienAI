@@ -14,14 +14,14 @@ services:
     env_file:
       - .env
   acid_frontend:
-    image: acadmicid/front_end:0.2.1
+    image: acadmicid/front_end:0.2.2
     ports:
       - 3000:3000
     restart: unless-stopped
     env_file:
       - .env
   acid_python_svc:
-    image: acadmicid/python_services:0.2.1
+    image: acadmicid/python_services:0.2.2
     depends_on:
       - weaviate
       - redis
@@ -31,7 +31,7 @@ services:
     env_file:
       - .env
   acid_file_svc:
-    image: acadmicid/file_services:0.2.1
+    image: acadmicid/file_services:0.2.2
     depends_on:
       - weaviate
       - redis
@@ -41,7 +41,7 @@ services:
     env_file:
       - .env
   acid_research_spaces:
-    image: acadmicid/research_spaces:0.2.1
+    image: acadmicid/research_spaces:0.2.2
     depends_on:
       - weaviate
       - redis
