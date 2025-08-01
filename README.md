@@ -118,8 +118,8 @@ configuration options, please see the
 
 ### Follow Along
 
-> [!TIP] You can follow along with the [Self Hosting Quick Start Video](https://youtu.be/7CwiZ2BDltw) to see the steps in action:
-> [https://youtu.be/7CwiZ2BDltw](https://youtu.be/7CwiZ2BDltw)
+> [!TIP]
+> You can follow along with the [Self Hosting Quick Start Video](https://youtu.be/7CwiZ2BDltw) to see the steps in action.
 
 ## ⚠️ Beta Notice
 
