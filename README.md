@@ -66,7 +66,7 @@ semantically indexed, allowing you to easily find information.
   format.
 
 <div style="display: flex;">
-<img width="99%" alt="AcademicID" src="https://static.academicid.io/result.png" />
+<img width="99%" alt="AcademicID" src="https://docs.academicid.io/imgs/image2.png" />
 </div>
 
 <div style="display: flex;">
