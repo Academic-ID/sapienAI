@@ -1,99 +1,126 @@
 # SapienAI
 
-SapienAI is a self-hosted academic chatbot and research workspace that provides
-access to the latest models from OpenAI, Anthropic, Google and models you
-self-host in one interface. Features include realtime audio chat, local data
-storage, academic paper integration, semantic search, and dedicated research
-spaces for writing and organizing academic work.
+<p align="center">
+  <!-- Optional: If you have a logo, uncomment the line below -->
+  <img src="https://docs.academicid.io/logo.svg" alt="SapienAI Logo" width="150"/>
+  <h1 align="center">SapienAI</h1>
+  <p align="center">
+    Your Self-Hosted, All-in-One AI Research Workspace
+    <br />
+    <a href="https://docs.academicid.io/selfhosting/00-getting-started"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Academic-ID/sapienAI/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Academic-ID/sapienAI/issues">Request Feature</a>
+  </p>
+</p>
 
-# Features
+<!-- Badges -->
+<p align="center">
+    <a href="https://github.com/Academic-ID/sapienAI/stargazers">
+        <img src="https://img.shields.io/github/stars/Academic-ID/sapienAI?style=social" alt="GitHub Stars">
+    </a>        
+</p>
 
-## Sapien Chat
+SapienAI is a self-hosted academic chatbot and research workspace. It unifies
+the latest models from **OpenAI, Anthropic, Google, and self-hosted Ollama
+models** into a single, secure interface. Features include realtime audio chat,
+100% local data storage, academic paper integration, semantic search, and
+dedicated research spaces for writing and organizing your work.
 
-SapienAI provides a chat interface similar in function to ChatGPT, Claude or
-other genAI interfaces. You can converse with the AI models, upload images and
-files, and more. However, Sapien's chat experience ticks a few boxes not found
-in other options.
+---
 
-- **GPT4, o3, Claude 4, Google Gemini 2.5 Pro & Ollama:** One interface to
-  access the top publicly available generative AI models or your own self-hosted
-  ones! You can choose which model powers a chat, including changing models
-  mid-chat to take advantage of the different capabilities of each model.
-- **Realtime audio chat:** Have a realtime conversation with SapienAI.
-- **All data is stored locally on your device:** Everything fed into the app,
-  including all messages (sent and received), images (uploaded and generated)
-  and files, remains stored on your device.
-- **Model hosting flexibility.** Models can be accessed directly from OpenAI,
-  Anthropic or Google, or you can connect to these models through Azure, AWS or
-  Google Vertex. With Ollama support, you can also now run models locally on
-  your machine, or connect to services that utilise the same Ollama API format.
-- **All responses backed by actual academic papers.** Reduce the risk of
-  hallucination, improve model accuracy and have direct access to academic
-  papers. SapienAI can undertake a search for relevant academic papers to inform
-  each response.
-- **Academic focused:** SapienAI is prompted to act as a non-biased and
-  highly-intelligent academic advisor. You could think of SapienAI as a highly
-  knowledgeable expert in all domains. With cross-chat memory and the ability to
-  provide customised instructions SapienAI is flexible and always tailored to
-  your needs.
-- **Semantic search:** All uploaded documents are stored and semantically
-  indexed, allowing you to search for content using natural language. **Bonus:**
-  If you have connected your **Zotero** account, you can semantically search
-  items stored there as well!
+### ❤️ Support The Project
 
-<div style="display: flex">
-  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" />
-  <img width="49%" alt="AcademicID" src="https://github.com/user-attachments/assets/d4724d22-b533-4b91-b271-0470b254e6ba" />
+**If you find SapienAI useful, please consider giving it a star ⭐ on GitHub and
+sharing it with your colleagues!** Your support helps the project grow and
+motivates further development.
+
+---
+
+## 🌟 Key Features
+
+### 💬 Unified Chat Interface
+
+Converse with the world's best AI models in one place.
+
+- **🧠 Multi-Provider Support:** Seamlessly switch between the top models from
+  OpenAI, Anthropic and Google, and local models via Ollama.
+- **🎙️ Realtime Audio Chat:** Have a natural, spoken conversation with the AI.
+- **🔒 100% Local & Private:** All messages, files, and images are stored
+  securely on your own device.
+- **🔌 Flexible Hosting:** Connect directly to APIs (OpenAI, Anthropic, Google)
+  or through services like Azure, AWS, and Google Vertex.
+- **📚 Academic Grounding:** Reduce hallucinations by backing every response
+  with real academic papers from its integrated search.
+- **🔍 Semantic Search:** Instantly find information across all your chats and
+  uploaded documents using natural language. Connect your **Zotero** library to
+  search it too!
+
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">    
+<img src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" alt="Chat Interface" width="50%" />
+<img src="https://github.com/user-attachments/assets/d4724d22-b533-4b91-b271-0470b254e6ba" alt="Audio Chat Interface" width="50%" />
 </div>
 
-## Research Spaces
+### 🔬 Research Spaces
 
-Write your next paper with SapienAI's Research Spaces. Research Spaces are
-dedicated workspaces for you to upload your project documents and files. An
-integrated editor allows you to write and edit documents, and the chat interface
-allows you to ask questions about your documents, summarise them, and more. All
-uploaded documents are summarised based on the instructions you provide and are
-semantically indexed, allowing you to easily find information.
+A dedicated workspace to streamline your entire academic writing process.
 
-- **Streamline your writing:** Our integrated editor lets you write with **as
-  little or as much AI assistance as you desire**. Keep it simple and write
-  using Markdown or other text-based formats, or leverage our integrated support
-  for [Typst](https://github.com/typst/typst) and LaTex for a richer writing
-  experience.
-- **Organise your research:** Keep all your notes, sources, and drafts in one
-  intelligent, interconnected space. All uploaded documents can be semantically
-  searched, and AI-powered literature reviews can be exported in Word and Excel
-  format.
+- **✍️ Integrated Editor:** Write your paper with as little or as much AI
+  assistance as you need. Full support for **Markdown**, **Typst** and
+  **LaTeX**.
+- **📂 Unified Document Management:** Upload your project documents, notes, and
+  sources. The AI can read, summarize, and answer questions about them.
+- **📊 AI-Powered Literature Reviews:** Automatically generate and export
+  literature reviews in Word or Excel format based on your uploaded sources.
 
-<div style="display: flex;">
-<img width="99%" alt="AcademicID" src="https://docs.academicid.io/imgs/image2.png" />
-</div>
+<img src="https://docs.academicid.io/imgs/image2.png" alt="Research Space Overview" width="100%" />
+<img src="https://github.com/user-attachments/assets/1a89823f-d7f9-4a99-93d0-5aade121f2a7" alt="Integrated Editor" width="100%" />
 
-<div style="display: flex;">
-<img width="99%" alt="AcademicID" src="https://github.com/user-attachments/assets/1a89823f-d7f9-4a99-93d0-5aade121f2a7" />
-</div>
+## 🚀 Getting Started
 
-## Getting Started
+Get your own instance of SapienAI running in minutes.
 
-The full documentation for SapienAI can be found
-[here](https://docs.academicid.io/selfhosting/00-getting-started). The
-documentation includes installation instructions, configuration options, and
-more.
+### Prerequisites
 
-### Quick Start Guide
+- [Docker](https://www.docker.com/get-started) &
+  [Docker Compose](https://docs.docker.com/compose/install/) (comes with Docker
+  Desktop)
 
-For those who want to get started quickly, you can run SapienAI using Docker
-Compose:
+### Quick Start Installation
 
-```bash
-git clone https://github.com/Academic-ID/sapienAI
-cp example.env .env   # edit as needed, minimum requirement is setting an AI provider (e.g. setting OpenAI key is the quickest way to get started)
-docker compose up -d
-```
+1.  **Clone the repository:**
 
-## Beta notice!
+    ```bash
+    git clone https://github.com/Academic-ID/sapienAI.git
+    cd sapienAI
+    ```
 
-SapienAI is still under active development. Testing has been limited and only on
-a small range of devices. As such, there are no guarantees that the service will
-work flawlessly across all devices. We encourage you to raise any issues you
-come across [here](https://github.com/Academic-ID/sapienAI/issues).
+2.  **Configure your environment:** Copy the example environment file and edit
+    it with your details.
+
+    ```bash
+    cp example.env .env
+    ```
+
+    At a minimum, you must set an API key for at least one AI provider (e.g.,
+    `OPENAI_API_KEY`).
+
+3.  **Run with Docker Compose:**
+    ```bash
+    docker compose up -d
+    ```
+
+SapienAI will now be running at `http://localhost:3000`. For detailed
+configuration options, please see the
+[**full documentation**](https://docs.academicid.io/selfhosting/00-getting-started).
+
+## ⚠️ Beta Notice
+
+SapienAI is under active development and is currently in a beta phase. While we
+are working hard to ensure stability, you may encounter bugs. We greatly
+appreciate your help in making it better!
+
+Please **[open an issue](https://github.com/Academic-ID/sapienAI/issues)** to
+report any problems you face.
