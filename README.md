@@ -116,6 +116,11 @@ SapienAI will now be running at `http://localhost:3000`. For detailed
 configuration options, please see the
 [**full documentation**](https://docs.academicid.io/selfhosting/00-getting-started).
 
+### Follow Along
+
+> [!TIP] You can follow along with the [Self Hosting Quick Start Video](https://youtu.be/7CwiZ2BDltw) to see the steps in action:
+> [https://youtu.be/7CwiZ2BDltw](https://youtu.be/7CwiZ2BDltw)
+
 ## ⚠️ Beta Notice
 
 SapienAI is under active development and is currently in a beta phase. While we
