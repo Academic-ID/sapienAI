@@ -58,9 +58,9 @@ Converse with the world's best AI models in one place.
   uploaded documents using natural language. Connect your **Zotero** library to
   search it too!
 
-<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">    
-<img src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" alt="Chat Interface" width="50%" />
-<img src="https://github.com/user-attachments/assets/d4724d22-b533-4b91-b271-0470b254e6ba" alt="Audio Chat Interface" width="50%" />
+<div style="display: flex; justify-content: space-between;">    
+<img src="https://github.com/user-attachments/assets/4a458a37-e9ab-41a5-b7cf-a43ee50061a7" alt="Chat Interface" width="49%" />
+<img src="https://github.com/user-attachments/assets/d4724d22-b533-4b91-b271-0470b254e6ba" alt="Audio Chat Interface" width="49%" />
 </div>
 
 ### 🔬 Research Spaces
