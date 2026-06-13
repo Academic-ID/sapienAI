@@ -31,6 +31,11 @@ dedicated research spaces for writing and organizing your work.
 
 ---
 
+> [!NOTE]
+> THE SMARTER SAPIENAI RESEARCH WORKSPACE WITH AI AGENTS, KNOWLEDGE GRAPHS AND IN-BROWSER CODE EXECUTION COMING SOON!
+
+---
+
 ### ❤️ Support The Project
 
 **If you find SapienAI useful, please consider giving it a star ⭐ on GitHub and
