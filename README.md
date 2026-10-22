@@ -121,6 +121,16 @@ SapienAI will now be running at `http://localhost:3000`. For detailed
 configuration options, please see the
 [**full documentation**](https://docs.academicid.io/selfhosting/00-getting-started).
 
+### Upgrading Weaviate
+
+Weaviate data is kept in `./weaviate/weaviate_data`, and Weaviate supports
+upgrading one minor version at a time. Back up that folder first. If your
+install runs an older Weaviate (for example `1.29.2`), step through each minor
+release before starting the new compose file: set the `weaviate` image to
+`semitechnologies/weaviate:1.30.23`, run `docker compose up -d weaviate`, wait
+until it is ready, and repeat for `1.31.22`, `1.32.27`, `1.33.18`, `1.34.20`,
+`1.35.23`, `1.36.23`, `1.37.17` and `1.38.22`, then use `1.39.13`.
+
 ### Follow Along
 
 > [!TIP]
