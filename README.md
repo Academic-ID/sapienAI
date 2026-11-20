@@ -1,5 +1,10 @@
 # SapienAI
 
+> [!NOTE]
+> THE SMARTER SAPIENAI RESEARCH WORKSPACE WITH AI AGENTS, KNOWLEDGE GRAPHS AND IN-BROWSER CODE EXECUTION COMING BEFORE END OF 2026! 
+
+---
+
 <p align="center">
   <!-- Optional: If you have a logo, uncomment the line below -->
   <img src="https://docs.academicid.io/logo.svg" alt="SapienAI Logo" width="150"/>
@@ -28,11 +33,6 @@ the latest models from **OpenAI, Anthropic, Google, and self-hosted Ollama
 models** into a single, secure interface. Features include realtime audio chat,
 100% local data storage, academic paper integration, semantic search, and
 dedicated research spaces for writing and organizing your work.
-
----
-
-> [!NOTE]
-> THE SMARTER SAPIENAI RESEARCH WORKSPACE WITH AI AGENTS, KNOWLEDGE GRAPHS AND IN-BROWSER CODE EXECUTION COMING SOON!
 
 ---
 
